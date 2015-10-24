@@ -150,7 +150,7 @@ void loop() {
 
 void randomize() {
   int randNum = random(100);
-  Serial.println(randNum);
+  //Serial.println(randNum);
   if (randNum < threshhold) {
     counter = !counter;
   }
