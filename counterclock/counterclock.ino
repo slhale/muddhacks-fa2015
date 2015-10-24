@@ -26,9 +26,9 @@ RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
 int green = matrix.Color333(0,7,0);
 int blue = matrix.Color333(0,0,7);
 int red = matrix.Color333(7,0,0);
-int orange = matrix.Color333(7,4,0);
-int yellow = matrix.Color333(7,7,0);
-int purple = matrix.Color333(7,0,4);
+int orange = matrix.Color333(7,2,0);
+int yellow = matrix.Color333(7,6,0);
+int purple = matrix.Color333(6,0,5);
 int white = matrix.Color333(7,7,7);
 int black = matrix.Color333(0,0,0);
 
@@ -61,34 +61,45 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(1,30,00,24,10,2015); // change this
+  setTime(3,58,30,24,10,2015); // change this
 
 }
 
 void loop() {
+  // Keep track of the current and last times 
+  lastHour = currentHour;
+  lastMin = currentMin;
+  lastSec = currentSec;
+  currentHour = hour();
+  currentMin = minute();
+  currentSec = second();
+  
   if (stemsParty) {
     drawStems();
+    if (currentHour % 12 != 3 && currentMin != 59) {
+        stemsParty = false;
+    }
   } else { // aka when it's actually a clock
-    // Keep track of the current and last times 
-    lastHour = currentHour;
-    lastMin = currentMin;
-    lastSec = currentSec;
-    currentHour = hour();
-    currentMin = minute();
-    currentSec = second();
     
+    Serial.println(currentMin);
     // If the minute has changed, update the clock 
-    if ( (currentMin > lastMin) ||
-       ((currentMin == 0) && (lastMin != 0)) ) {
+    if ( currentMin != lastMin ) {
+        
       if (currentHour % 6 == 0 && currentMin == 0) {
         // might switch to counter at 12 or 6 o'clock
         randomize();
       }
+      
       if (currentHour == 0) { // party mode from midnight to 1 am
         party = true;
       } else {
         party = false;
       }
+
+      if (currentHour % 12 == 3 && currentMin == 59) {
+        stemsParty = true;
+      }
+     
       draw();
     }
   }
