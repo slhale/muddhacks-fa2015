@@ -35,25 +35,11 @@ int currentHour = 0;
 int currentMin = 0;
 int currentSec = 0;
 
-int clockInt = 0;            // digital pin 2 is now interrupt 0
-int masterClock = 0;         // counts rising edge clock signals
-int seconds = 0;             // variable
-int minutes = 0;             // variable
-int ledPin = 13;
-
 void setup() {
   // Start up the matrix
   matrix.begin();
   Serial.begin(9600);
   setTime(00,30,00,24,10,2015);
-
-  attachInterrupt(clockInt, clockCounter, RISING);
-      //  clockInt is our interrupt, clockCounter function is called when
-      //  invoked on a RISING clock edge
-  analogReference(DEFAULT);
-  pinMode(ledPin, OUTPUT);
-  Serial.begin(57600);
-  analogWrite(0, 127);   // this starts our PWM 'clock' with a 50% duty cycle
 
   updateTime();
   Serial.print("minute");
@@ -219,17 +205,5 @@ void minuteHand(int m, int color) {
   int yPixels = midY + (int)yLen;
   
   matrix.drawLine(midX, midY, xPixels, yPixels, color); 
-}
-
-void clockCounter()      // called by interrupt
-{
-  masterClock ++;        // with each clock rise add 1 to masterclock count
-  if(masterClock == 489) // 490Hz reached     
-  {                         
-    seconds ++;          // after one 490Hz cycle add 1 second ;)
-    masterClock = 0;     // Reset after 1 second is reached
-    tone(13, 100, 500);  // using tone to pulse LED without delay call ;)
-   }
-  return;
 }
 
