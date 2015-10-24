@@ -56,7 +56,10 @@ int height = 0;
 int antiHeight = 4;
 int colorStart = 0;
 int antiColorStart = 5;
-int xStart = -32;
+int xOneStart = -32;
+int xTwoStart = 56;
+int xThreeStart = -50;
+int xFourStart = 40;
 int stemsCount = 0;
 int stemsIterations = 0;
 
@@ -213,11 +216,30 @@ void drawStems() {
   // Slide red stems to center of screen
   if (mode == "slide" && stemsIterations % 100 == 0) {
     wipe();
-    writeStems(xStart + stemsCount, 12, 0, true);
+    writeStems(xOneStart, 0, 0, true);
+    writeStems(xTwoStart, 8, 0, true);
+    writeStems(xThreeStart, 16, 0, true);
+    writeStems(xFourStart, 24, 0, true);
+
+    if (xOneStart < 1) {
+      xOneStart ++;
+    } 
+ 
+    if (xTwoStart > 2 && stemsCount % 3 == 0) {
+      xTwoStart --;
+    }
+
+    if (xThreeStart < 1) {
+      xThreeStart += 3;
+    }
+
+    if (xFourStart > 2) {
+      xFourStart --;
+    }
 
     stemsCount ++;
 
-    if (stemsCount == 34) {
+    if (stemsCount == 63) {
       mode = "flash";
       stemsCount = 0;
     }
