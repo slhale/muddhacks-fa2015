@@ -53,14 +53,16 @@ boolean dinner = false;
 String mode = "rainbow"; // rainbow, slide, flash
 boolean down = true;
 int height = 0;
+int antiHeight = 4;
 int colorStart = 0;
+int antiColorStart = 5;
 int xStart = -32;
 int stemsCount = 0;
 int stemsIterations = 0;
 
 // changes probability for counter-clock
 // higher threshhold, higher probability
-int threshhold = 10;
+int threshhold = 100;
 
 void setup() {
   // Start up the matrix
@@ -71,7 +73,7 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(3,58,50,24,10,2015); // change this
+  setTime(5,59,50,24,10,2015); // change this
 }
 
 void loop() {
@@ -91,6 +93,7 @@ void loop() {
       drawStems();
     } else {
       stemsParty = false;
+      endStems();
       draw();
     } 
   } else if (dinner) {
@@ -171,15 +174,19 @@ void drawStems() {
   if (mode == "rainbow" && stemsIterations % 100 == 0) {
     wipe();
     writeStems(1, height * 6, colorStart, false);
+    writeStems(2, antiHeight * 6 + 1, antiColorStart, false);
 
     colorStart ++;
+    antiColorStart --;
     stemsCount ++;
 
     // Move vertically
     if (down) {
       height ++;
+      antiheight --;
     } else {
       height --;
+      antiheight ++;
     }
 
     // Reverse directions
@@ -190,6 +197,7 @@ void drawStems() {
     // Restart color array
     if (colorStart == 6) {
       colorStart = 0;
+      antiColorStart = 5;
     }
 
 
