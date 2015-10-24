@@ -39,28 +39,9 @@ void setup() {
   // Start up the matrix
   matrix.begin();
   Serial.begin(9600);
-  setTime(00,30,00,24,10,2015);
-
-  updateTime();
-  Serial.print("minute");
-  Serial.println(minute(now()));
   
-  // Draw stuff 
-//  delay(1000);
-//  wipe();
-  //center();
-  //matrix.drawLine(16,15,31,0, white);
-//  hourHand(12, 0, white);
-  hourHand(4,0, blue);
-  hourHand(4,20, green);
-  hourHand(5,0,white);
-//  hourHand(9,0,red);
-  //matrix.drawPixel(16,16,matrix.Color333(0,7,7));
+  setTime(1,3,00,24,10,2015); // change this
 
-  minuteHand(50,red);
-
-
-  circle();
 }
 
 void loop() {
