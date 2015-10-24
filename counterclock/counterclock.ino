@@ -61,6 +61,7 @@ void setup() {
 }
 
 void loop() {
+  // Keep track of the current and last times 
   lastHour = currentHour;
   lastMin = currentMin;
   lastSec = currentSec;
@@ -71,8 +72,10 @@ void loop() {
   Serial.print("hour ");
   Serial.println(currentHour);
   
+  // If the minute has changed, update the clock 
   if ( (currentMin > lastMin) ||
-       ((currentMin == 0) && (lastMin != 0)) ){
+       ((currentMin == 0) && (lastMin != 0)) ) {
+    // Write in this order so that we don't have overlapping or invisible lines. 
     wipe();
     minuteHand(currentMin, blue);
     hourHand(currentHour, currentMin, white);
