@@ -278,9 +278,9 @@ void drawStems() {
       writeStems(2,12,0,true);
     }
 
-    if ((stemsIterations + 50) % 240) == 0) {
+    if ((stemsIterations + 50) % 240 == 0) {
       matrix.fillRect(0,24,32,8,black);
-    } else if ((stemsIterations + 50) % 120) == 0) {
+    } else if ((stemsIterations + 50) % 120 == 0) {
       writeStems(1, 24, 0, true);
     }
   }
