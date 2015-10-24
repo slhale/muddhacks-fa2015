@@ -83,6 +83,8 @@ void loop() {
       if (heightStart == 0 || heightStart == 8) {
           down = !down;
       }
+
+      delay(100);
     }
   } else {
     // Keep track of the current and last times 
