@@ -33,7 +33,7 @@ int white = matrix.Color333(7,7,7);
 int black = matrix.Color333(0,0,0);
 
 int rainbow[] = {red, orange, yellow, green, blue, purple};
-char stems[] = "stems!";
+char stems[] = "stems ";
 
 // Timekeeper variables
 int lastHour = 0;
@@ -72,7 +72,7 @@ void loop() {
     int heightStart = 0;
     boolean down = true;
 
-    for (int i = 0; i < 24; i ++) {
+    for (int i = 0; i < 6; i ++) {
       wipe();
       writeStems(heightStart * 4, colorStart);
 
@@ -88,9 +88,9 @@ void loop() {
           down = !down;
       }
 
-      delay(100);
+      delay(20);
     }
-  } else {
+  } else { // when it's actually a clock
     // Keep track of the current and last times 
     lastHour = currentHour;
     lastMin = currentMin;
@@ -98,17 +98,13 @@ void loop() {
     currentHour = hour();
     currentMin = minute();
     currentSec = second();
-  
-  //  Serial.print("hour ");
-  //  Serial.println(currentHour);
-
-  if (currentHour % 6 == 0) {
+    
+    // If the minute has changed, update the clock 
+    if ( (currentMin > lastMin) ||
+       ((currentMin == 0) && (lastMin != 0)) ) {
+        if (currentHour % 6 == 0) {
     randomize();
   }
-  
-  // If the minute has changed, update the clock 
-  if ( (currentMin > lastMin) ||
-       ((currentMin == 0) && (lastMin != 0)) ) {
       draw();
     }
   }
@@ -130,13 +126,13 @@ void draw() {
   // drawing overwrites each other. 
   if (party) {
     matrix.fillRect(0,0,32,32,white); // make white background
-    circle();
-    minuteHand(currentMin, blue);
-    hourHand(currentHour, currentMin, white);
+    circle(0);
+    minuteHand(currentMin,0);
+    hourHand(currentHour, currentMin, 0);
   } else {
     minuteHand(currentMin, blue);
     hourHand(currentHour, currentMin, white);
-    circle();
+    circle(green);
   }
 }
 
@@ -144,7 +140,7 @@ void draw() {
  * Set all the pixels of the matrix to be dark. 
  */
 void wipe() {
-  matrix.fillRect(0,0,32,32,matrix.Color333(0,0,0));
+  matrix.fillRect(0,0,32,32,black);
 }
 
 /**
@@ -152,7 +148,7 @@ void wipe() {
  * The circle has a thickness of about 4 pixels and a
  * diameter equal to the sidelength of the matrix square. 
  */
-void circle() {
+void circle(int color) {
   int center = matrix.width()/2;
   int radius = 15;
   
@@ -165,10 +161,10 @@ void circle() {
     
     // Draw multiple circles with different center points because the board 
     // does not have an exact center point. There are 4 'centers' in a square.
-    matrix.drawCircle(center,center, radius, matrix.Color333(0,7,0));
-    matrix.drawCircle(center-1,center, radius, matrix.Color333(0,7,0));
-    matrix.drawCircle(center-1,center-1, radius, matrix.Color333(0,7,0));
-    matrix.drawCircle(center,center-1, radius, matrix.Color333(0,7,0));
+    matrix.drawCircle(center,center, radius, color);
+    matrix.drawCircle(center-1,center, radius, color);
+    matrix.drawCircle(center-1,center-1, radius, color);
+    matrix.drawCircle(center,center-1, radius, color);
   }
 }
 
