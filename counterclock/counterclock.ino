@@ -21,7 +21,6 @@ RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
 #define TIME_MSG_LEN 11 // Time sync to PC is HEADER and unix time_t as ten ascii digits
 #define TIME_HEADER 'T' // Header tag for serial time sync message
 #define TIME_REQUEST 7 // ASCII bell character requests a time sync message
-RTC_DS1307 RTC;
 
 // Setup default colors
 int green = matrix.Color333(0,7,0);
@@ -41,6 +40,10 @@ void setup() {
   matrix.begin();
   Serial.begin(9600);
   setTime(00,30,00,24,10,2015);
+
+  updateTime();
+  Serial.print("minute");
+  Serial.println(minute(now()));
   
   // Draw stuff 
 //  delay(1000);
@@ -69,8 +72,8 @@ void loop() {
   currentMin = minute();
   currentSec = second();
   
-  Serial.print("hour ");
-  Serial.println(currentHour);
+//  Serial.print("hour ");
+//  Serial.println(currentHour);
   
   // If the minute has changed, update the clock 
   if ( (currentMin > lastMin) ||
@@ -204,22 +207,3 @@ void minuteHand(int m, int color) {
   matrix.drawLine(midX, midY, xPixels, yPixels, color); 
 }
 
-void updateTime() {
-  for (int i == 0; i < 11; i ++) {
-    char c = Serial.read();
-
-    if (c == 'T') {
-      time_t pctime = 0;
-
-      for (int j = 0; j < 10; j ++) {
-        c = Serial.read();
-        
-        if (c >= '0' && c <= '9') {
-          pctime = (10 * pctime) + (c - '0');
-        }
-      }
-
-      setTime(pctime);
-    }
-  }
-}
