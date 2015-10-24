@@ -78,7 +78,7 @@ void center() {
 void hourHand(int h, int m, int color) {
   float circleFraction = h % 12;
   float minuteAdjustment = (1.0 / 12.0) * ((m % 60) / 60); // Move hour hand within the hour
-  float angle = 2*M_PI * (12 / (circleFraction + minuteAdjustment)); // in radians
+  float angle = 2*M_PI * ((circleFraction + minuteAdjustment)/ 12.0); // in radians
   Serial.print('angle');
   Serial.println(angle);
   
