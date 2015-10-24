@@ -227,7 +227,7 @@ void drawStems() {
 
 void drawDinner() {
   // Random background
-  matrix.fillRect(0,0,32,32,red);
+  //matrix.fillRect(0,0,32,32,red);
   
   // Lots of random circles
   int numCircles = random(5) + 3;
@@ -241,11 +241,14 @@ void drawDinner() {
     x = random(16)+8;
     y = random(16)+8;
     
-    matrix.drawCircle(16,16, radius, matrix.Color333(r, g, b));
+    matrix.drawCircle(x, y, radius, matrix.Color333(r, g, b));
   }
   
   // Write on top of background 'dinner'
-  string dinner = "DINNER";
+  String dinner = "DINNER";
+  // Set the color and start location of the words
+  matrix.setCursor(0, 14);
+  matrix.setTextColor(blue);
   for (int i = 0; i < 6; i ++) {
     matrix.print(dinner[i]);      
   }
