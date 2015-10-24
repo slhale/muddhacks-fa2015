@@ -75,9 +75,11 @@ void loop() {
   currentSec = second();
   
   if (stemsParty) {
-    drawStems();
-    if (currentHour % 12 != 3 && currentMin != 59) {
-        stemsParty = false;
+    if (currentHour % 12 == 3 && currentMin == 59) {
+      drawStems();
+    } else {
+      stemsParty = false;
+      draw();
     }
   } else { // aka when it's actually a clock
     
