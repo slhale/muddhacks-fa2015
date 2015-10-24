@@ -125,32 +125,60 @@ void draw() {
 }
 
 void drawStems() {
-    int colorStart = 0;
-    int heightStart = 0;
-    boolean down = true;
+  int colorStart = 0;
+  int heightStart = 0;
+  boolean down = true;
 
-    for (int i = 0; i < 18; i ++) {
-      wipe();
-      writeStems(heightStart * 6, colorStart);
+  // Rainbow stems bouncing up and down
+  for (int i = 0; i < 18; i ++) {
+    wipe();
+    writeStems(1, heightStart * 6, colorStart, false);
 
-      colorStart ++;
+    colorStart ++;
       
-      if (down) {
-        heightStart ++;
-      } else {
-        heightStart --;
-      }
-
-      if (heightStart == 0 || heightStart == 4) {
-          down = !down;
-      }
-
-      if (colorStart == 6) {
-        colorStart = 0;
-      }
-
-      delay(1000);
+    // Move up or down
+    if (down) {
+      heightStart ++;
+    } else {
+      heightStart --;
     }
+
+    // Reverse directions
+    if (heightStart == 0 || heightStart == 4) {
+      down = !down;
+    }
+
+    // Restart color array
+    if (colorStart == 6) {
+      colorStart = 0;
+    }
+
+    delay(100);
+  }
+ 
+  xStart = -32;
+  colorStart = 0;
+
+  // Slide red stems cross to center of screen
+  for (int i = 0; i < 34; i ++) {
+    wipe();
+    writeStems(xStart + i, 12, 0, true);
+
+    delay(100);
+  }   
+
+  delay(900);
+
+  // Flash stems 4 times
+  for (int i = 0; i < 4; i ++) {
+    wipe();
+    delay(1000);
+    writeStems(1, 12, 0, true);
+    delay(1000);
+  }
+
+  wipe();
+  delay(500);
 }
 
 /**
@@ -311,25 +339,33 @@ void minuteHand(int m, int color) {
   }
 }
 
-void writeStems(int yloc, int startColor /* 0 = red...5 = purple */) {
-  matrix.setCursor(1, yloc);
-  int colorNum = startColor;
-  int stemsNum = 0;
+void writeStems(int xloc, int yloc, int startColor /* 0 = red...5 = purple */, boolean solid) {
+  if (solid) {
+    matrix.setTextColor(rainbow[startColor]);
 
-  while (colorNum < 6) {
-    matrix.setTextColor(rainbow[colorNum]);
-    matrix.print(stems[stemsNum]);
-    colorNum ++;
-    stemsNum ++;
-  }
+    for (int i = 0; i < 5; i ++) {
+      matrix.print(stems[i]);      
+    }
+  } else {
+    matrix.setCursor(xloc, yloc);
+    int colorNum = startColor;
+    int stemsNum = 0;
 
-  colorNum = 0;
+    while (colorNum < 6) {
+      matrix.setTextColor(rainbow[colorNum]);
+      matrix.print(stems[stemsNum]);
+      colorNum ++;
+      stemsNum ++;
+    }
 
-  while (colorNum < startColor) {
-    matrix.setTextColor(rainbow[colorNum]);
-    matrix.print(stems[stemsNum]);
-    colorNum ++;
-    stemsNum ++;
+    colorNum = 0;
+
+    while (colorNum < startColor) {
+      matrix.setTextColor(rainbow[colorNum]);
+      matrix.print(stems[stemsNum]);
+      colorNum ++;
+      stemsNum ++;
+    }
   }
 }
 
