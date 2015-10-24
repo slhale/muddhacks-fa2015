@@ -132,8 +132,7 @@ void draw() {
   // Change order depending on party mode because the 
   // drawing overwrites each other. 
   if (party) {
-    matrix.fillRect(0,0,32,32,white); // make white background
-    circle(0);
+    partyCircle();
     minuteHand(currentMin,0);
     hourHand(currentHour, currentMin, 0);
   } else {
