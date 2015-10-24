@@ -418,3 +418,11 @@ void writeStems(int xloc, int yloc, int startColor /* 0 = red...5 = purple */, b
   }
 }
 
+void endStems() {
+  String mode = "rainbow"; // rainbow, slide, flash
+  boolean down = true;
+  int height = 0;
+  int colorStart = 0;
+  int stemsCount = 0;
+  int stemsIterations = 0;
+}
