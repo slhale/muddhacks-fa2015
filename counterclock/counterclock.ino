@@ -231,13 +231,17 @@ void drawDinner() {
   
   // Lots of random circles
   int numCircles = random(5) + 3;
-  int r, g, b, radius;
+  int r, g, b, radius, x, y;
   for (int i = 0; i < numCircles; i++) {
+    // Randomize a bunch of variables defining the circle
     r = random(7);
     g = random(7);
     b = random(7);
     radius = random(16);
-    matrix.drawCircle(16,16, radius, matrix.Color333(r, g, b));
+    x = random(16)+8;
+    y = random(16)+8;
+    
+    matrix.drawCircle(x, y, radius, matrix.Color333(r, g, b));
   }
   
   // Write on top of background 'dinner'
