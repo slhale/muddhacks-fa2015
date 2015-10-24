@@ -66,9 +66,12 @@ void loop() {
   Serial.print("hour ");
   Serial.println(currentHour);
   
-  if ( (currentHour > lastHour) ||
-       ((currentHour == 0) && (lastHour != 0)) ){
-    // update things
+  if ( (currentMin > lastMin) ||
+       ((currentMin == 0) && (lastMin != 0)) ){
+    wipe();
+    hourHand(currentHour, currentMin, white);
+    minuteHand(currentMin, blue);
+    circle();
   }
   
 }
