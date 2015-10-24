@@ -97,11 +97,11 @@ void loop() {
     currentMin = minute();
     currentSec = second();
   
-  //  Serial.print("hour ");
-  //  Serial.println(currentHour);
-  
-  // If the minute has changed, update the clock 
-  if ( (currentMin > lastMin) ||
+    //  Serial.print("hour ");
+    //  Serial.println(currentHour);
+    
+    // If the minute has changed, update the clock 
+    if ( (currentMin > lastMin) ||
        ((currentMin == 0) && (lastMin != 0)) ) {
       draw();
     }
@@ -125,12 +125,12 @@ void draw() {
   if (party) {
     matrix.fillRect(0,0,32,32,white); // make white background
     circle();
-    minuteHand(currentMin, blue);
-    hourHand(currentHour, currentMin, white);
+    minuteHand(currentMin);
+    hourHand(currentHour, currentMin);
   } else {
     minuteHand(currentMin, blue);
     hourHand(currentHour, currentMin, white);
-    circle();
+    circle(green);
   }
 }
 
@@ -138,7 +138,7 @@ void draw() {
  * Set all the pixels of the matrix to be dark. 
  */
 void wipe() {
-  matrix.fillRect(0,0,32,32,matrix.Color333(0,0,0));
+  matrix.fillRect(0,0,32,32,black);
 }
 
 /**
@@ -146,7 +146,7 @@ void wipe() {
  * The circle has a thickness of about 4 pixels and a
  * diameter equal to the sidelength of the matrix square. 
  */
-void circle() {
+void circle(int color) {
   int center = matrix.width()/2;
   int radius = 15;
   
@@ -159,10 +159,10 @@ void circle() {
     
     // Draw multiple circles with different center points because the board 
     // does not have an exact center point. There are 4 'centers' in a square.
-    matrix.drawCircle(center,center, radius, matrix.Color333(0,7,0));
-    matrix.drawCircle(center-1,center, radius, matrix.Color333(0,7,0));
-    matrix.drawCircle(center-1,center-1, radius, matrix.Color333(0,7,0));
-    matrix.drawCircle(center,center-1, radius, matrix.Color333(0,7,0));
+    matrix.drawCircle(center,center, radius, color);
+    matrix.drawCircle(center-1,center, radius, color);
+    matrix.drawCircle(center-1,center-1, radius, color);
+    matrix.drawCircle(center,center-1, radius, color);
   }
 }
 
