@@ -160,6 +160,8 @@ void wipe() {
  * Draw a circle. 
  * The circle has a thickness of about 4 pixels and a
  * diameter equal to the sidelength of the matrix square. 
+ * @param color, the color to draw the circle as (this will
+ *               be ignored in party mode)
  */
 void circle(int color) {
   int center = matrix.width()/2;
@@ -218,7 +220,8 @@ void partyCircle() {
  * Draws the hour hand on the clock face
  * @param h, the hour from 0 to 24
  * @param m, the minute
- * @param color, the color that the drawn hand should be
+ * @param color, the color that the drawn hand should be 
+ *               (this will be ignored in party mode)
  */
 void hourHand(int h, int m, int color) {
   // Calculate the angle of the hour hand. 
@@ -266,6 +269,7 @@ void hourHand(int h, int m, int color) {
  * Draws the minute hand on the clock face
  * @param m, the minute
  * @param color, the color that the drawn hand should be
+ *               (this will be ignored in party mode)
  */
 void minuteHand(int m, int color) {
   float angle = ((double) (m % 60)) * M_PI / 30.0;
