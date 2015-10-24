@@ -82,18 +82,29 @@ void hourHand(int h, int m, int color) {
   Serial.print('angle');
   Serial.println(angle);
   
+  int midX = 15;
+  int midy = 15;
+
+  if (angle < 1.5708) {
+    midX = 16;
+    midY = 16;
+  } else if (angle < 3.1416) {
+    midY = 16;
+  } else if (angle > 4.7124) {
+    midX = 16;
+  }
+
   int radius = 16; // pixels
-  int middle = matrix.width() / 2; // pixels
   float xLen = radius * cos(angle);
   float yLen = radius * sin(angle);
-  int xPixels = middle + xLen;
-  int yPixels = middle + yLen;
+  int xPixels = midX + xLen;
+  int yPixels = midY + yLen;
   Serial.print('x pixels');
   Serial.println(xPixels);
   Serial.print('y pixels');
   Serial.println(yPixels);
   
-  matrix.drawLine(middle, middle, xPixels, yPixels, color);
+  matrix.drawLine(midX, midY, xPixels, yPixels, color);
 
 }
 
