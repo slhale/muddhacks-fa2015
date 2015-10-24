@@ -76,7 +76,7 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(5,59,50,24,10,2015); // change this
+  setTime(16,59,50,24,10,2015); // change this
 }
 
 void loop() {
@@ -108,7 +108,7 @@ void loop() {
     } 
   } else { // aka when it's actually a clock
     // If the minute has changed, update the clock 
-    if ( currentSec != lastSec ) {
+    if ( currentMin != lastMin ) {
       // Have a chance of switching to or from counter-clock 
       // when the hour hand is in a vertical position (12 or 
       // 6 o'clock)
@@ -164,7 +164,7 @@ void draw() {
     minuteHand(currentMin,0);
     hourHand(currentHour, currentMin, 0);
   } else {
-    minuteHand(currentSec, blue);
+    minuteHand(currentMin, blue);
     hourHand(currentHour, currentMin, white);
     circle(green);
   }
@@ -186,10 +186,10 @@ void drawStems() {
     // Move vertically
     if (down) {
       height ++;
-      antiheight --;
+      antiHeight --;
     } else {
       height --;
-      antiheight ++;
+      antiHeight ++;
     }
 
     // Reverse directions
@@ -256,10 +256,13 @@ void drawStems() {
 }
 
 void drawDinner() {
-  // Random background
-  matrix.fillRect(0,0,32,32,red);
+  // Only update the intial background if we just changed to the mode
+  if (lastSec == 59) {
+    // Random background
+    matrix.fillRect(0,0,32,32,matrix.ColorHSV(140.0, 255.0, 50.0, true));
+  }
   
-  // Lots of random circles
+  // Lots of random circles that change each loop
   int numCircles = random(5) + 3;
   int r, g, b, radius, x, y;
   for (int i = 0; i < numCircles; i++) {
@@ -277,8 +280,9 @@ void drawDinner() {
   // Write on top of background 'dinner'
   String dinner = "DINNER";
   // Set the color and start location of the words
-  matrix.setCursor(0, 14);
-  matrix.setTextColor(blue);
+  matrix.setCursor(1, 14);
+  matrix.setTextColor(black);
+  matrix.setTextSize(0.5); 
   for (int i = 0; i < 6; i ++) {
     matrix.print(dinner[i]);      
   }
@@ -372,6 +376,9 @@ void hourHand(int h, int m, int color) {
     angle = -1 * angle;
   }
   
+  // Offset the angle so that up aligns with the words' up
+  angle = angle - (M_PI / 2);
+  
   int midX = 15;
   int midY = 15;
   int radius = 10;
@@ -414,6 +421,9 @@ void minuteHand(int m, int color) {
   if (counter) {
     angle = -1 * angle;
   }
+  
+  // Offset the angle so that up aligns with the words' up
+  angle = angle - (M_PI / 2);
   
   int midX = 15;
   int midY = 15;
