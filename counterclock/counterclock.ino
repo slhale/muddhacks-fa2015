@@ -48,6 +48,7 @@ boolean counter = false;
 boolean party = false;
 boolean stemsParty = false;
 boolean dinner = false;
+boolean christmas = false;
 
 //Stems variables
 String mode = "rainbow"; // rainbow, slide, flash
@@ -134,6 +135,12 @@ void loop() {
       if (currentHour == 5+12 && currentMin == 0) {
         dinner = true;
       }
+      
+      if (day() == 25 && month() == 12) {
+        christmas = true;
+      } else {
+        christmas = false;
+      }
      
       draw();
     }
@@ -163,7 +170,13 @@ void draw() {
     minuteHand(currentMin,0);
     hourHand(currentHour, currentMin, 0);
   } else {
-    minuteHand(currentMin, blue);
+    // If today is christmas change the minute hand from 
+    // blue to red. Christmas colors. 
+    if (christmas) {
+      minuteHand(currentMin, red);
+    } else {
+      minuteHand(currentMin, blue);
+    }
     hourHand(currentHour, currentMin, white);
     circle(green);
   }
