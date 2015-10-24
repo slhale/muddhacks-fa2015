@@ -234,10 +234,24 @@ void drawStems() {
 }
 
 void drawDinner() {
-  // Random background
-  matrix.fillRect(0,0,32,32,matrix.ColorHSV(180.0, 255.0, 100.0, true));
+  // Only update the intial background and "DINNER" if we 
+  // just changed to the mode
+  if (lastSec == 59) {
+    // Random background
+    matrix.fillRect(0,0,32,32,matrix.ColorHSV(140.0, 255.0, 50.0, true));
+    
+    // Write on top of background 'dinner'
+    String dinner = "DINNER";
+    // Set the color and start location of the words
+    matrix.setCursor(1, 14);
+    matrix.setTextColor(blue);
+    matrix.setTextSize(0.5); 
+    for (int i = 0; i < 6; i ++) {
+      matrix.print(dinner[i]);      
+    }
+  }
   
-  // Lots of random circles
+  // Lots of random circles that change each loop
   int numCircles = random(5) + 3;
   int r, g, b, radius, x, y;
   for (int i = 0; i < numCircles; i++) {
@@ -250,16 +264,6 @@ void drawDinner() {
     y = random(16)+8;
     
     matrix.drawCircle(x, y, radius, matrix.Color333(r, g, b));
-  }
-  
-  // Write on top of background 'dinner'
-  String dinner = "DINNER";
-  // Set the color and start location of the words
-  matrix.setCursor(1, 14);
-  matrix.setTextColor(blue);
-  matrix.setTextSize(0.5); 
-  for (int i = 0; i < 6; i ++) {
-    matrix.print(dinner[i]);      
   }
 }
 
