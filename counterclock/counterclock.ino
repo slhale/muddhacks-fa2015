@@ -49,9 +49,18 @@ boolean party = false;
 boolean stemsParty = false;
 boolean dinner = false;
 
+//Stems variables
+String mode = "rainbow"; // rainbow, slide, flash
+boolean down = true;
+int height = 0;
+int colorStart = 0;
+int xStart = -32;
+int stemsCount = 0;
+int stemsIterations = 0;
+
 // changes probability for counter-clock
 // higher threshhold, higher probability
-int threshhold = 50;
+int threshhold = 10;
 
 void setup() {
   // Start up the matrix
@@ -62,7 +71,7 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(0,59,50,24,10,2015); // change this
+  setTime(3,58,50,24,10,2015); // change this
 }
 
 void loop() {
@@ -93,11 +102,11 @@ void loop() {
     } 
   } else { // aka when it's actually a clock
     // If the minute has changed, update the clock 
-    if ( currentMin != lastMin ) {
+    if ( currentSec != lastSec ) {
       // Have a chance of switching to or from counter-clock 
       // when the hour hand is in a vertical position (12 or 
       // 6 o'clock)
-      if (currentHour % 6 == 0 && currentMin == 0) {
+      if (currentHour % 6 == 0 && currentMin == 0 && currentSec == 0) {
         randomize();
       }
       
@@ -129,10 +138,9 @@ void loop() {
 
 void randomize() {
   int randNum = random(100);
+  Serial.println(randNum);
   if (randNum < threshhold) {
-    counter = true;
-  } else {
-    counter = false;
+    counter = !counter;
   }
 }
 
@@ -150,67 +158,71 @@ void draw() {
     minuteHand(currentMin,0);
     hourHand(currentHour, currentMin, 0);
   } else {
-    minuteHand(currentMin, blue);
+    minuteHand(currentSec, blue);
     hourHand(currentHour, currentMin, white);
     circle(green);
   }
 }
 
 void drawStems() {
-  int colorStart = 0;
-  int heightStart = 0;
-  boolean down = true;
+  stemsIterations ++;
 
   // Rainbow stems bouncing up and down
-  for (int i = 0; i < 18; i ++) {
+  if (mode == "rainbow" && stemsIterations % 100 == 0) {
     wipe();
-    writeStems(1, heightStart * 6, colorStart, false);
+    writeStems(1, height * 6, colorStart, false);
 
     colorStart ++;
-      
-    // Move up or down
+    stemsCount ++;
+
+    // Move vertically
     if (down) {
-      heightStart ++;
+      height ++;
     } else {
-      heightStart --;
+      height --;
     }
 
     // Reverse directions
-    if (heightStart == 0 || heightStart == 4) {
+    if (height == 0 || height == 4) {
       down = !down;
     }
-
+  
     // Restart color array
     if (colorStart == 6) {
       colorStart = 0;
     }
 
-    delay(100);
+
+    if (stemsCount == 18) {
+      stemsCount = 0;
+      mode = "slide";
+      colorStart = 0;
+      height = 0;
+      down = true;
+    }
   }
- 
-  int xStart = -32;
-  colorStart = 0;
 
-  // Slide red stems cross to center of screen
-  for (int i = 0; i < 34; i ++) {
+  // Slide red stems to center of screen
+  if (mode == "slide" && stemsIterations % 100 == 0) {
     wipe();
-    writeStems(xStart + i, 12, 0, true);
+    writeStems(xStart + stemsCount, 12, 0, true);
 
-    delay(100);
-  }   
+    stemsCount ++;
 
-  delay(900);
+    if (stemsCount == 34) {
+      mode = "flash";
+      stemsCount = 0;
+    }
+  }
 
   // Flash stems 4 times
-  for (int i = 0; i < 4; i ++) {
-    wipe();
-    delay(1000);
-    writeStems(1, 12, 0, true);
-    delay(1000);
+  if (mode == "flash" && stemsIterations % 100 == 0) {
+    if (stemsIterations % 200 == 0) {
+      wipe();
+    } else if (stemsIterations % 100 == 0) {
+      writeStems(1,12,0,true);
+    }
   }
-
-  wipe();
-  delay(500);
 }
 
 void drawDinner() {
@@ -395,6 +407,7 @@ void minuteHand(int m, int color) {
 
 void writeStems(int xloc, int yloc, int startColor /* 0 = red...5 = purple */, boolean solid) {
   if (solid) {
+    matrix.setCursor(xloc, yloc);
     matrix.setTextColor(rainbow[startColor]);
 
     for (int i = 0; i < 5; i ++) {
