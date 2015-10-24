@@ -26,7 +26,7 @@ RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
 int green = matrix.Color333(0,7,0);
 int blue = matrix.Color333(0,0,7);
 int red = matrix.Color333(7,0,0);
-int orange = matrix.Color333(7,4,0);
+int orange = matrix.Color333(7,2,0);
 int yellow = matrix.Color333(7,7,0);
 int purple = matrix.Color333(7,0,4);
 int white = matrix.Color333(7,7,7);
