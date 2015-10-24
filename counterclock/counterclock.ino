@@ -39,7 +39,7 @@ void setup() {
   // Start up the matrix
   matrix.begin();
   Serial.begin(9600);
-  setTime(00,00,00,24,10,2015);
+  setTime(00,30,00,24,10,2015);
   
   // Draw stuff 
 //  delay(1000);
@@ -73,8 +73,8 @@ void loop() {
   if ( (currentSec > lastSec) ||
        ((currentSec == 0) && (lastSec != 0)) ){
     wipe();
-    hourHand(currentHour, currentMin, white);
     minuteHand(currentMin, blue);
+    hourHand(currentHour, currentMin, white);
     circle();
   }
   
@@ -220,7 +220,7 @@ void getPCtime() {
 }
 */
 
-
+/*
 void getTime() {
   time_t t;
   int c;
@@ -237,6 +237,7 @@ void getTime() {
     while (c != '!');
       set_time(ss(t));
 }
+*/
 
 static int getb(void) {
   while (!(Serial.available() > 0));
