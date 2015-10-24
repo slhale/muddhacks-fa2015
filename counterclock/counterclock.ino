@@ -180,9 +180,9 @@ void draw() {
     hourHand(currentHour, currentMin, white);
     
     if (christmas) {
-      circle(green);
+      circle(matrix.Color333(0,5,1));
     } else {
-      circle(matrix.Color333(0,6,1));
+      circle(green);
     }
   }
 }
