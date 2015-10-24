@@ -49,8 +49,9 @@ boolean party = false;
 boolean stemsParty = false;
 boolean dinner = false;
 boolean christmas = false;
+boolean newYears = false;
 
-//Stems variables
+// Stems variables
 String mode = "rainbow"; // rainbow, slide, flash
 boolean down = true;
 int height = 0;
@@ -62,6 +63,10 @@ int xTwoStart = 16;
 int xThreeStart = -62;
 int stemsCount = 0;
 int stemsIterations = 0;
+
+// New Years Variables
+int nyCount = 10;
+int nyIterations = 0;
 
 // changes probability for counter-clock
 // higher threshhold, higher probability
@@ -518,8 +523,50 @@ void endStems() {
   String mode = "rainbow"; // rainbow, slide, flash
   boolean down = true;
   int height = 0;
+  int antiHeight = 4;
   int colorStart = 0;
+  int antiColorStart = 5;
+  int xOneStart = -32;
+  int xTwoStart = 16;
+  int xThreeStart = -62;
   int stemsCount = 0;
   int stemsIterations = 0;
 }
 
+void newYears() {
+  if (nyIterations % 1000 == 0 && nyCount > 2) {
+    matrix.setCursor(8,8);
+    matrix.setTextSize(2);
+    matrix.setTextColor(orange);
+
+    if (nyCount == 10) {
+      
+    }
+    if (nyCount == 10) {
+      
+    }
+    if (nyCount == 10) {
+      
+    }
+    if (nyCount == 10) {
+      
+    }
+    if (nyCount == 10) {
+      
+    }
+    if (nyCount == 10) {
+      
+    }
+    if (nyCount == 10) {
+      
+    }
+    if (nyCount == 10) {
+      
+    }
+    matrix.print(nyCount);
+ 
+    nyCount --;
+  }
+
+  nyIterations ++;
+}
