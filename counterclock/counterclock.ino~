@@ -47,6 +47,7 @@ int currentSec = 0;
 boolean counter = false;
 boolean party = false;
 boolean stemsParty = false;
+boolean dinner = false;
 
 // changes probability for counter-clock
 // higher threshhold, higher probability
@@ -61,7 +62,7 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(3,58,45,24,10,2015); // change this
+  setTime(0,59,50,24,10,2015); // change this
 }
 
 void loop() {
@@ -72,12 +73,22 @@ void loop() {
   currentHour = hour();
   currentMin = minute();
   currentSec = second();
+
+  Serial.println(currentHour); // somehow it needs the printing
+    // for emotional support
   
   if (stemsParty) {
     if (currentHour % 12 == 3 && currentMin == 59) {
       drawStems();
     } else {
       stemsParty = false;
+      draw();
+    } 
+  } else if (dinner) {
+    if (currentHour == 5+12 && currentMin == 0) {
+      drawDinner();
+    } else {
+      dinner = false;
       draw();
     } 
   } else { // aka when it's actually a clock
@@ -102,6 +113,12 @@ void loop() {
       // Stems parties start at 3:59 am or pm 
       if (currentHour % 12 == 3 && currentMin == 59) {
         stemsParty = true;
+      }
+      
+      // Check when to intiate the dinner alert
+      // Dinner is at 5 pm 
+      if (currentHour == 5+12 && currentMin == 0) {
+        dinner = true;
       }
      
       draw();
@@ -194,6 +211,10 @@ void drawStems() {
 
   wipe();
   delay(500);
+}
+
+void drawDinner() {
+
 }
 
 /**
