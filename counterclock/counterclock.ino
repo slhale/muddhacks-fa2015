@@ -124,9 +124,9 @@ void drawStems() {
     int heightStart = 0;
     boolean down = true;
 
-    for (int i = 0; i < 24; i ++) {
+    for (int i = 0; i < 18; i ++) {
       wipe();
-      writeStems(heightStart * 4, colorStart);
+      writeStems(heightStart * 6, colorStart);
 
       colorStart ++;
       
@@ -136,7 +136,7 @@ void drawStems() {
         heightStart --;
       }
 
-      if (heightStart == 0 || heightStart == 7) {
+      if (heightStart == 0 || heightStart == 5) {
           down = !down;
       }
 
