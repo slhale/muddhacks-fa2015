@@ -61,7 +61,7 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(23,59,45,24,10,2015); // change this
+  setTime(0,59,50,24,10,2015); // change this
 }
 
 void loop() {
