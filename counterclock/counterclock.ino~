@@ -26,9 +26,9 @@ RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
 int green = matrix.Color333(0,7,0);
 int blue = matrix.Color333(0,0,7);
 int red = matrix.Color333(7,0,0);
-int orange = matrix.Color333(7,4,0);
-int yellow = matrix.Color333(7,7,0);
-int purple = matrix.Color333(7,0,4);
+int orange = matrix.Color333(7,2,0);
+int yellow = matrix.Color333(7,6,0);
+int purple = matrix.Color333(6,0,5);
 int white = matrix.Color333(7,7,7);
 int black = matrix.Color333(0,0,0);
 
@@ -61,34 +61,51 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(1,30,00,24,10,2015); // change this
-
+  setTime(3,58,30,24,10,2015); // change this
 }
 
 void loop() {
+  // Keep track of the current and last times 
+  lastHour = currentHour;
+  lastMin = currentMin;
+  lastSec = currentSec;
+  currentHour = hour();
+  currentMin = minute();
+  currentSec = second();
+  
   if (stemsParty) {
     drawStems();
+    
+    // Check for when to end the stems party
+    if (currentHour % 12 != 3 && currentMin != 59) {
+        stemsParty = false;
+    }
   } else { // aka when it's actually a clock
-    // Keep track of the current and last times 
-    lastHour = currentHour;
-    lastMin = currentMin;
-    lastSec = currentSec;
-    currentHour = hour();
-    currentMin = minute();
-    currentSec = second();
+    
+    Serial.println(currentMin);
     
     // If the minute has changed, update the clock 
-    if ( (currentMin > lastMin) ||
-       ((currentMin == 0) && (lastMin != 0)) ) {
+    if ( currentMin != lastMin ) {
+        
       if (currentHour % 6 == 0 && currentMin == 0) {
         // might switch to counter at 12 or 6 o'clock
         randomize();
       }
-      if (currentHour == 0) { // party mode from midnight to 1 am
+      
+      // Check when to initiate a party
+      // Parties are from midnight to 1 am
+      if (currentHour == 0) {
         party = true;
       } else {
         party = false;
       }
+      
+      // Check when to intiate the stems party
+      // Stems parties start at 3:59 am or pm 
+      if (currentHour % 12 == 3 && currentMin == 59) {
+        stemsParty = true;
+      }
+     
       draw();
     }
   }
@@ -141,8 +158,12 @@ void drawStems() {
         heightStart --;
       }
 
-      if (heightStart == 0 || heightStart == 5) {
+      if (heightStart == 0 || heightStart == 4) {
           down = !down;
+      }
+
+      if (colorStart == 6) {
+        colorStart = 0;
       }
 
       delay(1000);
@@ -269,6 +290,7 @@ void hourHand(int h, int m, int color) {
  * Draws the minute hand on the clock face
  * @param m, the minute
  * @param color, the color that the drawn hand should be
+ *               (this will be ignored in party mode)
  */
 void minuteHand(int m, int color) {
   float angle = ((double) (m % 60)) * M_PI / 30.0;
