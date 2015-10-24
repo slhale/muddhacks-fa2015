@@ -31,6 +31,8 @@ void setup() {
 //  delay(1000);
 //  wipe();
   center();
+  hourHand(4,20);
+  matrix.drawLine(16,15,31,0, matrix.Color333(7,7,7));
 }
 
 void loop() {
@@ -63,9 +65,9 @@ void center() {
   matrix.drawPixel(16,16, matrix.Color333(0,0,7));
 }
 
-void hourHand(float hour, float minute) {
-  float circleFraction = hour % 12.0;
-  float minuteAdjustment = (1.0 / 12.0) * (minute % 60.0); // Move hour hand within the hour
+void hourHand(int hour, int minute) {
+  float circleFraction = hour % 12;
+  float minuteAdjustment = (1.0 / 12.0) * (minute % 60); // Move hour hand within the hour
   float angle = 2*M_PI * (circleFraction + minuteAdjustment); // in radians
   
   int radius = 16; // pixels
