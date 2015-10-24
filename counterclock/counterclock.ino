@@ -182,7 +182,7 @@ void draw() {
     if (christmas) {
       circle(green);
     } else {
-      circle(matrix.Color333(0,6,1));
+      circle(matrix.Color333(0,4,2));
     }
   }
 }
