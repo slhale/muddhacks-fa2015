@@ -62,7 +62,6 @@ void setup() {
   //stemsParty = true;
   
   setTime(3,58,30,24,10,2015); // change this
-
 }
 
 void loop() {
@@ -76,26 +75,34 @@ void loop() {
   
   if (stemsParty) {
     drawStems();
+    
+    // Check for when to end the stems party
     if (currentHour % 12 != 3 && currentMin != 59) {
         stemsParty = false;
     }
   } else { // aka when it's actually a clock
     
     Serial.println(currentMin);
+    
     // If the minute has changed, update the clock 
     if ( currentMin != lastMin ) {
-        
+      // Have a chance of switching to or from counter-clock 
+      // when the hour hand is in a vertical position (12 or 
+      // 6 o'clock)
       if (currentHour % 6 == 0 && currentMin == 0) {
-        // might switch to counter at 12 or 6 o'clock
         randomize();
       }
       
-      if (currentHour == 0) { // party mode from midnight to 1 am
+      // Check when to initiate a party
+      // Parties are from midnight to 1 am
+      if (currentHour == 0) {
         party = true;
       } else {
         party = false;
       }
-
+      
+      // Check when to intiate the stems party
+      // Stems parties start at 3:59 am or pm 
       if (currentHour % 12 == 3 && currentMin == 59) {
         stemsParty = true;
       }
