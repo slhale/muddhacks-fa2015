@@ -64,7 +64,7 @@ int stemsIterations = 0;
 
 // changes probability for counter-clock
 // higher threshhold, higher probability
-int threshhold = 100;
+int threshhold = 50;
 
 void setup() {
   // Start up the matrix
@@ -75,7 +75,7 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(16,59,50,24,10,2015); // change this
+  setTime(3,58,50,24,10,2015); // change this
 }
 
 void loop() {
@@ -256,23 +256,19 @@ void drawDinner() {
     matrix.fillRect(0,0,32,32,matrix.ColorHSV(140.0, 255.0, 50.0, true));
   }
   
-  // Produce a probability of more circles being added to reduce the rate 
-  int moreCircles = random(3);
-  if (moreCircles < 2) {
-    // Lots of random circles that change each loop
-    int numCircles = random(5) + 3;
-    int r, g, b, radius, x, y;
-    for (int i = 0; i < numCircles; i++) {
-      // Randomize a bunch of variables defining the circle
-      r = random(7);
-      g = random(7);
-      b = random(7);
-      radius = random(16);
-      x = random(16)+8;
-      y = random(16)+8;
-      
-      matrix.drawCircle(x, y, radius, matrix.Color333(r, g, b));
-    }
+  // Lots of random circles that change each loop
+  int numCircles = random(5) + 3;
+  int r, g, b, radius, x, y;
+  for (int i = 0; i < numCircles; i++) {
+    // Randomize a bunch of variables defining the circle
+    r = random(7);
+    g = random(7);
+    b = random(7);
+    radius = random(16);
+    x = random(16)+8;
+    y = random(16)+8;
+    
+    matrix.drawCircle(x, y, radius, matrix.Color333(r, g, b));
   }
   
   // Write on top of background 'dinner'
@@ -281,8 +277,8 @@ void drawDinner() {
   matrix.setCursor(1, 14);
   matrix.setTextColor(black);
   for (int i = 0; i < 6; i ++) {
-    matrix.setCursor(i*5, i*5);
-    matrix.print(dinner[i]);
+    matrix.setCursor(i*5+1, i*5);
+    matrix.print(dinner[i]);      
   }
 }
 
