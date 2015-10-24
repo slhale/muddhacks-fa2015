@@ -269,7 +269,7 @@ void drawStems() {
     if (stemsIterations % 200 == 0) {
       matrix.fillRect(0,0,32,8,black);
     } else if (stemsIterations % 100 == 0) {
-      writeStems(1,12,0,true);
+      writeStems(1,0,0,true);
     }
 
     if ((stemsIterations - 20) % 70 == 0) {
