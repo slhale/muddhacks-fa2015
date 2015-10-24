@@ -212,3 +212,26 @@ void getPCtime() {
   }
 }
 */
+
+
+void getTime() {
+  time_t t;
+  int c;
+
+  do {
+    Serial.println("?T");
+    t = 0;
+
+    while ('T' != getb());
+    while (('0' <= (c = getb())) && (c <= '9')) {
+      t = 10 * t + (c & 0x0F);
+    }
+
+    while (c != '!');
+      set_time(ss(t));
+}
+
+static int getb(void) {
+  while (!(Serial.available() > 0));
+    return Serial.read();
+}
