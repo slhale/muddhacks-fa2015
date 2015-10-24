@@ -48,6 +48,15 @@ boolean counter = false;
 boolean party = false;
 boolean stemsParty = false;
 
+//Stems variables
+string mode = "rainbow"; // rainbow, slide, flash
+boolean down = true;
+int height = 0;
+int colorStart = 0;
+int xStart = -32;
+int stemsCount = 0;
+int stemsIterations = 0;
+
 // changes probability for counter-clock
 // higher threshhold, higher probability
 int threshhold = 50;
@@ -136,60 +145,65 @@ void draw() {
 }
 
 void drawStems() {
-  int colorStart = 0;
-  int heightStart = 0;
-  boolean down = true;
+  stemsIterations ++;
 
   // Rainbow stems bouncing up and down
-  for (int i = 0; i < 18; i ++) {
+  if (mode == "rainbow" && stemsIterations % 100 == 0) {
     wipe();
-    writeStems(1, heightStart * 6, colorStart, false);
+    writeStems(1, height * 6, colorStart, false);
 
     colorStart ++;
-      
-    // Move up or down
+    stemsCount ++;
+
+    // Move vertically
     if (down) {
-      heightStart ++;
+      height ++;
     } else {
-      heightStart --;
+      height --;
     }
 
     // Reverse directions
-    if (heightStart == 0 || heightStart == 4) {
+    if (height == 0 || height == 4) {
       down = !down;
     }
-
+  
     // Restart color array
     if (colorStart == 6) {
       colorStart = 0;
     }
 
-    delay(100);
+
+    if (stemsCount == 18) {
+      stemsCount = 0;
+      mode = "slide";
+      colorStart = 0;
+      height = 0;
+      down = true;
+    }
   }
- 
-  xStart = -32;
-  colorStart = 0;
 
-  // Slide red stems cross to center of screen
-  for (int i = 0; i < 34; i ++) {
+
+  // Slide red stems to center of screen
+  if (mode == "slide" && stemsIterations % 100 == 0) {
     wipe();
-    writeStems(xStart + i, 12, 0, true);
+    writeStems(xStart + stemsCount, 12, 0, true);
 
-    delay(100);
-  }   
+    stemsCount ++;
 
-  delay(900);
+    if (stemsCount == 34) {
+      mode = "flash";
+      stemsCount = 0;
+    }
+  }
 
   // Flash stems 4 times
-  for (int i = 0; i < 4; i ++) {
-    wipe();
-    delay(1000);
-    writeStems(1, 12, 0, true);
-    delay(1000);
+  if (mode == "flash" && stemsIterations % 100 == 0) {
+    if (stemsIterations % 200 == 0) {
+      wipe();
+    } else if (stemsIterations % 100 == 0) {
+      writeStems(1,12,0,true);
+    }
   }
-
-  wipe();
-  delay(500);
 }
 
 /**
@@ -352,6 +366,7 @@ void minuteHand(int m, int color) {
 
 void writeStems(int xloc, int yloc, int startColor /* 0 = red...5 = purple */, boolean solid) {
   if (solid) {
+    matrix.setCursor(xloc, yloc);
     matrix.setTextColor(rainbow[startColor]);
 
     for (int i = 0; i < 5; i ++) {
