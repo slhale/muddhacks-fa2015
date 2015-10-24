@@ -75,9 +75,6 @@ void loop() {
     currentHour = hour();
     currentMin = minute();
     currentSec = second();
-  
-    //  Serial.print("hour ");
-    //  Serial.println(currentHour);
     
     // If the minute has changed, update the clock 
     if ( (currentMin > lastMin) ||
@@ -85,7 +82,6 @@ void loop() {
       draw();
     }
   }
-  
 }
 
 void randomize() {
@@ -97,6 +93,11 @@ void randomize() {
   }
 }
 
+/**
+ * Draw all the components of the clock.
+ * Components include the background, the hour hand, 
+ * and the minute hand.
+ */
 void draw() {
   wipe();
   // Change order depending on party mode because the 
