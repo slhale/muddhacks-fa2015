@@ -170,15 +170,20 @@ void draw() {
     minuteHand(currentMin,0);
     hourHand(currentHour, currentMin, 0);
   } else {
-    // If today is christmas change the minute hand from 
-    // blue to red. Christmas colors. 
+    // If today is christmas change to Christmas colors
     if (christmas) {
       minuteHand(currentMin, red);
     } else {
       minuteHand(currentMin, blue);
     }
+    
     hourHand(currentHour, currentMin, white);
-    circle(green);
+    
+    if (christmas) {
+      circle(green);
+    } else {
+      circle(matrix.Color333(0,6,1));
+    }
   }
 }
 
