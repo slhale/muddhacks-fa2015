@@ -7,6 +7,7 @@
 #include <Adafruit_GFX.h>   // Core graphics library
 #include <RGBmatrixPanel.h> // Hardware-specific library
 #include <Time.h>
+#include <math.h> // Include math for trig funtions for clock hands
 
 #define CLK 11
 #define LAT 9
@@ -50,6 +51,7 @@ void circle() {
   matrix.drawCircle(center,center-1, radius, matrix.Color333(0,7,0));
 }
 
+
 void line() {
   matrix.drawLine(0,0,15,15, matrix.Color333(7,7,7));
 }
@@ -59,6 +61,21 @@ void center() {
   matrix.drawPixel(15,16, matrix.Color333(7,0,0));
   matrix.drawPixel(16,15, matrix.Color333(0,7,0));
   matrix.drawPixel(16,16, matrix.Color333(0,0,7));
+}
+
+void hourHand(float hour, float minute) {
+  float circleFraction = minute % 60.0;
+  float angle = 2*M_PI * circleFraction; // in radians
+  
+  int radius = 16; // pixels
+  int middle = matrix.width() / 2; // pixels
+  float xLen = radius * cos(angle);
+  float yLen = radius * sin(angle);
+  int xPixels = middle + xLen;
+  int yPixels = middle + yLen;
+  
+  matrix.drawLine(middle, middle, xPixels, yPixels, matrix.Color333(0, 7, 7));
+
 }
 
 void getPCtime() {
