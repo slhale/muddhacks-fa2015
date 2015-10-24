@@ -16,6 +16,10 @@
 #define D   A0
 RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
 
+#define TIME_MSG_LEN 11 // Time sync to PC is HEADER and unix time_t as ten ascii digits
+#define TIME_HEADER 'T' // Header tag for serial time sync message
+# TIME_REQUEST 7 // ASCII bell character requests a time sync message
+
 void setup() {
   int x, y;
   Serial.print('testing, hello there');
@@ -38,7 +42,7 @@ void getPCtime() {
           pctime = (10 * pctime) + (c - '0'); // Converts digits to a number
         }
           
-          DateTime.sync(pctime); // Sync DateTime clock to the time received on the serial port
+          setTime(pctime); // Sync DateTime clock to the time received on the serial port
       }
     }
   }
