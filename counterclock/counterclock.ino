@@ -96,8 +96,11 @@ void center() {
 void hourHand(int h, int m, int color) {
   // Calculate the angle of the hour hand. 
   float circleFraction = h % 12; // because there are 24 hours
-  float minuteAdjustment = (1.0 / 12.0) * (((double)(m % 60)) / 60.0); // Move hour hand within the hour
-  float angle = 2*M_PI * ((circleFraction + minuteAdjustment)/ 12.0); // in radians
+  float hourAngle = 2.0*M_PI * circleFraction / 12.0; // in radians
+  
+  float minuteAngle = ((double) (m % 60)) * M_PI / 30.0;
+  float angle = hourAngle + minuteAngle;
+
   /*
   Serial.print('angle');
   Serial.println(angle);
