@@ -3,7 +3,7 @@
 //             and Marina Knittel
 // date: 23.10.15
 
-
+#include <gamma.h>
 #include <Adafruit_GFX.h>   // Core graphics library
 #include <RGBmatrixPanel.h> // Hardware-specific library
 
@@ -18,10 +18,10 @@ RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
 
 void setup() {
   int x, y;
-  
+  Serial.print('testing, hello there');
 }
 
 void loop() {
-  
+  int time;
 }
 
