@@ -60,7 +60,7 @@ int stemsIterations = 0;
 
 // changes probability for counter-clock
 // higher threshhold, higher probability
-int threshhold = 10;
+int threshhold = 100;
 
 void setup() {
   // Start up the matrix
@@ -71,7 +71,7 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(3,58,50,24,10,2015); // change this
+  setTime(5,59,50,24,10,2015); // change this
 }
 
 void loop() {
@@ -91,6 +91,7 @@ void loop() {
       drawStems();
     } else {
       stemsParty = false;
+      endStems();
       draw();
     } 
   } else if (dinner) {
@@ -245,7 +246,7 @@ void drawDinner() {
   }
   
   // Write on top of background 'dinner'
-  string dinner = "DINNER";
+  String dinner = "DINNER";
   for (int i = 0; i < 6; i ++) {
     matrix.print(dinner[i]);      
   }
