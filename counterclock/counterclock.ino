@@ -30,8 +30,10 @@ int white = matrix.Color333(7,7,7);
 
 int lastHour = 0;
 int lastMin = 0;
+int lastSec = 0;
 int currentHour = 0;
 int currentMin = 0;
+int currentSec = 0;
 
 void setup() {
   // Start up the matrix
@@ -60,14 +62,16 @@ void setup() {
 void loop() {
   lastHour = currentHour;
   lastMin = currentMin;
+  lastSec = currentSec;
   currentHour = hour();
   currentMin = minute();
+  currentSec = second();
   
   Serial.print("hour ");
   Serial.println(currentHour);
   
-  if ( (currentMin > lastMin) ||
-       ((currentMin == 0) && (lastMin != 0)) ){
+  if ( (currentSec > lastSec) ||
+       ((currentSec == 0) && (lastSec != 0)) ){
     wipe();
     hourHand(currentHour, currentMin, white);
     minuteHand(currentMin, blue);
