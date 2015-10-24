@@ -19,7 +19,7 @@
 //#define C   A2
 //#define D   A3
 // If your matrix has the DOUBLE HEADER input, use:
-#define CLK 8  // MUST be on PORTB! (Use pin 11 on Mega)
+#define CLK 11  // MUST be on PORTB! (Use pin 11 on Mega)
 #define LAT 9
 #define OE  10
 #define A   A3
