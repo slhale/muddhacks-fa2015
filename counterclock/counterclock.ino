@@ -84,6 +84,11 @@ void loop() {
         if (currentHour % 6 == 0 && currentMin == 0) {
           randomize();
         }
+        if (currentHour == 0) { // party mode from midnight to 1 am
+          party = true;
+        } else {
+          party = false;
+        }
         draw();
     }
   }
