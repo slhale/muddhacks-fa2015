@@ -47,6 +47,7 @@ int currentSec = 0;
 boolean counter = false;
 boolean party = false;
 boolean stemsParty = false;
+boolean dinner = false;
 
 //Stems variables
 string mode = "rainbow"; // rainbow, slide, flash
@@ -70,8 +71,7 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(3,58,30,24,10,2015); // change this
-
+  setTime(0,59,50,24,10,2015); // change this
 }
 
 void loop() {
@@ -82,37 +82,59 @@ void loop() {
   currentHour = hour();
   currentMin = minute();
   currentSec = second();
+
+  Serial.println(currentHour); // somehow it needs the printing
+    // for emotional support
   
   if (stemsParty) {
-    drawStems();
-    if (currentHour % 12 != 3 && currentMin != 59) {
-        stemsParty = false;
-    }
+    if (currentHour % 12 == 3 && currentMin == 59) {
+      drawStems();
+    } else {
+      stemsParty = false;
+      draw();
+    } 
+  } else if (dinner) {
+    if (currentHour == 5+12 && currentMin == 0) {
+      drawDinner();
+    } else {
+      dinner = false;
+      draw();
+    } 
   } else { // aka when it's actually a clock
-    
-    Serial.println(currentMin);
     // If the minute has changed, update the clock 
     if ( currentMin != lastMin ) {
-        
+      // Have a chance of switching to or from counter-clock 
+      // when the hour hand is in a vertical position (12 or 
+      // 6 o'clock)
       if (currentHour % 6 == 0 && currentMin == 0) {
-        // might switch to counter at 12 or 6 o'clock
         randomize();
       }
       
-      if (currentHour == 0) { // party mode from midnight to 1 am
+      // Check when to initiate a party
+      // Parties are from midnight to 1 am
+      if (currentHour == 0) {
         party = true;
       } else {
         party = false;
       }
-
+      
+      // Check when to intiate the stems party
+      // Stems parties start at 3:59 am or pm 
       if (currentHour % 12 == 3 && currentMin == 59) {
         stemsParty = true;
+      }
+      
+      // Check when to intiate the dinner alert
+      // Dinner is at 5 pm 
+      if (currentHour == 5+12 && currentMin == 0) {
+        dinner = true;
       }
      
       draw();
     }
   }
 }
+
 
 void randomize() {
   int randNum = random(100);
@@ -133,8 +155,7 @@ void draw() {
   // Change order depending on party mode because the 
   // drawing overwrites each other. 
   if (party) {
-    matrix.fillRect(0,0,32,32,white); // make white background
-    circle(0);
+    partyCircle();
     minuteHand(currentMin,0);
     hourHand(currentHour, currentMin, 0);
   } else {
@@ -182,7 +203,6 @@ void drawStems() {
     }
   }
 
-
   // Slide red stems to center of screen
   if (mode == "slide" && stemsIterations % 100 == 0) {
     wipe();
@@ -204,6 +224,10 @@ void drawStems() {
       writeStems(1,12,0,true);
     }
   }
+}
+
+void drawDinner() {
+  
 }
 
 /**

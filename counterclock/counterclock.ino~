@@ -26,9 +26,9 @@ RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
 int green = matrix.Color333(0,7,0);
 int blue = matrix.Color333(0,0,7);
 int red = matrix.Color333(7,0,0);
-int orange = matrix.Color333(7,4,0);
-int yellow = matrix.Color333(7,7,0);
-int purple = matrix.Color333(7,0,4);
+int orange = matrix.Color333(7,2,0);
+int yellow = matrix.Color333(7,6,0);
+int purple = matrix.Color333(6,0,5);
 int white = matrix.Color333(7,7,7);
 int black = matrix.Color333(0,0,0);
 
@@ -47,6 +47,7 @@ int currentSec = 0;
 boolean counter = false;
 boolean party = false;
 boolean stemsParty = false;
+boolean dinner = false;
 
 // changes probability for counter-clock
 // higher threshhold, higher probability
@@ -61,38 +62,70 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(1,30,00,24,10,2015); // change this
-
+  setTime(0,59,50,24,10,2015); // change this
 }
 
 void loop() {
+  // Keep track of the current and last times 
+  lastHour = currentHour;
+  lastMin = currentMin;
+  lastSec = currentSec;
+  currentHour = hour();
+  currentMin = minute();
+  currentSec = second();
+
+  Serial.println(currentHour); // somehow it needs the printing
+    // for emotional support
+  
   if (stemsParty) {
-    drawStems();
+    if (currentHour % 12 == 3 && currentMin == 59) {
+      drawStems();
+    } else {
+      stemsParty = false;
+      draw();
+    } 
+  } else if (dinner) {
+    if (currentHour == 5+12 && currentMin == 0) {
+      drawDinner();
+    } else {
+      dinner = false;
+      draw();
+    } 
   } else { // aka when it's actually a clock
-    // Keep track of the current and last times 
-    lastHour = currentHour;
-    lastMin = currentMin;
-    lastSec = currentSec;
-    currentHour = hour();
-    currentMin = minute();
-    currentSec = second();
-    
     // If the minute has changed, update the clock 
-    if ( (currentMin > lastMin) ||
-       ((currentMin == 0) && (lastMin != 0)) ) {
+    if ( currentMin != lastMin ) {
+      // Have a chance of switching to or from counter-clock 
+      // when the hour hand is in a vertical position (12 or 
+      // 6 o'clock)
       if (currentHour % 6 == 0 && currentMin == 0) {
-        // might switch to counter at 12 or 6 o'clock
         randomize();
       }
-      if (currentHour == 0) { // party mode from midnight to 1 am
+      
+      // Check when to initiate a party
+      // Parties are from midnight to 1 am
+      if (currentHour == 0) {
         party = true;
       } else {
         party = false;
       }
+      
+      // Check when to intiate the stems party
+      // Stems parties start at 3:59 am or pm 
+      if (currentHour % 12 == 3 && currentMin == 59) {
+        stemsParty = true;
+      }
+      
+      // Check when to intiate the dinner alert
+      // Dinner is at 5 pm 
+      if (currentHour == 5+12 && currentMin == 0) {
+        dinner = true;
+      }
+     
       draw();
     }
   }
 }
+
 
 void randomize() {
   int randNum = random(100);
@@ -113,8 +146,7 @@ void draw() {
   // Change order depending on party mode because the 
   // drawing overwrites each other. 
   if (party) {
-    matrix.fillRect(0,0,32,32,white); // make white background
-    circle(0);
+    partyCircle();
     minuteHand(currentMin,0);
     hourHand(currentHour, currentMin, 0);
   } else {
@@ -125,28 +157,64 @@ void draw() {
 }
 
 void drawStems() {
-    int colorStart = 0;
-    int heightStart = 0;
-    boolean down = true;
+  int colorStart = 0;
+  int heightStart = 0;
+  boolean down = true;
 
-    for (int i = 0; i < 18; i ++) {
-      wipe();
-      writeStems(heightStart * 6, colorStart);
+  // Rainbow stems bouncing up and down
+  for (int i = 0; i < 18; i ++) {
+    wipe();
+    writeStems(1, heightStart * 6, colorStart, false);
 
-      colorStart ++;
+    colorStart ++;
       
-      if (down) {
-        heightStart ++;
-      } else {
-        heightStart --;
-      }
-
-      if (heightStart == 0 || heightStart == 5) {
-          down = !down;
-      }
-
-      delay(1000);
+    // Move up or down
+    if (down) {
+      heightStart ++;
+    } else {
+      heightStart --;
     }
+
+    // Reverse directions
+    if (heightStart == 0 || heightStart == 4) {
+      down = !down;
+    }
+
+    // Restart color array
+    if (colorStart == 6) {
+      colorStart = 0;
+    }
+
+    delay(100);
+  }
+ 
+  int xStart = -32;
+  colorStart = 0;
+
+  // Slide red stems cross to center of screen
+  for (int i = 0; i < 34; i ++) {
+    wipe();
+    writeStems(xStart + i, 12, 0, true);
+
+    delay(100);
+  }   
+
+  delay(900);
+
+  // Flash stems 4 times
+  for (int i = 0; i < 4; i ++) {
+    wipe();
+    delay(1000);
+    writeStems(1, 12, 0, true);
+    delay(1000);
+  }
+
+  wipe();
+  delay(500);
+}
+
+void drawDinner() {
+
 }
 
 /**
@@ -269,6 +337,7 @@ void hourHand(int h, int m, int color) {
  * Draws the minute hand on the clock face
  * @param m, the minute
  * @param color, the color that the drawn hand should be
+ *               (this will be ignored in party mode)
  */
 void minuteHand(int m, int color) {
   float angle = ((double) (m % 60)) * M_PI / 30.0;
@@ -306,25 +375,33 @@ void minuteHand(int m, int color) {
   }
 }
 
-void writeStems(int yloc, int startColor /* 0 = red...5 = purple */) {
-  matrix.setCursor(1, yloc);
-  int colorNum = startColor;
-  int stemsNum = 0;
+void writeStems(int xloc, int yloc, int startColor /* 0 = red...5 = purple */, boolean solid) {
+  if (solid) {
+    matrix.setTextColor(rainbow[startColor]);
 
-  while (colorNum < 6) {
-    matrix.setTextColor(rainbow[colorNum]);
-    matrix.print(stems[stemsNum]);
-    colorNum ++;
-    stemsNum ++;
-  }
+    for (int i = 0; i < 5; i ++) {
+      matrix.print(stems[i]);      
+    }
+  } else {
+    matrix.setCursor(xloc, yloc);
+    int colorNum = startColor;
+    int stemsNum = 0;
 
-  colorNum = 0;
+    while (colorNum < 6) {
+      matrix.setTextColor(rainbow[colorNum]);
+      matrix.print(stems[stemsNum]);
+      colorNum ++;
+      stemsNum ++;
+    }
 
-  while (colorNum < startColor) {
-    matrix.setTextColor(rainbow[colorNum]);
-    matrix.print(stems[stemsNum]);
-    colorNum ++;
-    stemsNum ++;
+    colorNum = 0;
+
+    while (colorNum < startColor) {
+      matrix.setTextColor(rainbow[colorNum]);
+      matrix.print(stems[stemsNum]);
+      colorNum ++;
+      stemsNum ++;
+    }
   }
 }
 
