@@ -62,7 +62,7 @@ int stemsIterations = 0;
 
 // changes probability for counter-clock
 // higher threshhold, higher probability
-int threshhold = 100;
+int threshhold = 50;
 
 void setup() {
   // Start up the matrix
@@ -73,7 +73,7 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(16,59,50,24,10,2015); // change this
+  setTime(3,58,50,24,10,2015); // change this
 }
 
 void loop() {
