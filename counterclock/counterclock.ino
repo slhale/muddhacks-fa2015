@@ -55,6 +55,10 @@ void setup() {
 
   stemsParty = true;
   setTime(1,3,00,24,10,2015); // change this
+  //party = true;
+  //counter = true;
+  
+  setTime(1,30,00,24,10,2015); // change this
 
 }
 
@@ -91,15 +95,26 @@ void loop() {
   //  Serial.print("hour ");
   //  Serial.println(currentHour);
   
-    // If the minute has changed, update the clock 
-    if ( (currentMin > lastMin) ||
-         ((currentMin == 0) && (lastMin != 0)) ) {
-      // Write in this order so that we don't have overlapping or invisible lines. 
-      wipe();
-      minuteHand(currentMin, blue);
-      hourHand(currentHour, currentMin, white);
-      circle();
-    }
+  // If the minute has changed, update the clock 
+  if ( (currentMin > lastMin) ||
+       ((currentMin == 0) && (lastMin != 0)) ) {
+    draw();
+  }
+  
+}
+
+void draw() {
+  wipe();
+  // Change order depending on party mode because the 
+  // drawing overwrites each other. 
+  if (party) {
+    circle();
+    minuteHand(currentMin, blue);
+    hourHand(currentHour, currentMin, white);
+  } else {
+    minuteHand(currentMin, blue);
+    hourHand(currentHour, currentMin, white);
+    circle();
   }
 }
 
@@ -108,35 +123,6 @@ void loop() {
  */
 void wipe() {
   matrix.fillRect(0,0,32,32,matrix.Color333(0,0,0));
-}
-
-// Copy of colorwheel from the example thing 
-void partyCircle() {
-  for(y=0; y < matrix.width(); y++) {
-    dy = 15.5 - (float)y;
-    for(x=0; x < matrix.height(); x++) {
-      dx = 15.5 - (float)x;
-      d  = dx * dx + dy * dy;
-      if(d <= (16.5 * 16.5)) { // Inside the circle(ish)?
-        hue = (int)((atan2(-dy, dx) + PI) * 1536.0 / (PI * 2.0));
-        d = sqrt(d);
-        if(d > 15.5) {
-          // Do a little pseudo anti-aliasing along perimeter
-          sat = 255;
-          val = (int)((1.0 - (d - 15.5)) * 255.0 + 0.5);
-        } else
-        {
-          // White at center
-          sat = (int)(d / 15.5 * 255.0 + 0.5);
-          val = 255;
-        }
-        c = matrix.ColorHSV(hue, sat, val, true);
-      } else {
-        c = 0;
-      }
-      matrix.drawPixel(x, y, c);
-    }
-  }
 }
 
 /**
@@ -161,6 +147,39 @@ void circle() {
     matrix.drawCircle(center-1,center, radius, matrix.Color333(0,7,0));
     matrix.drawCircle(center-1,center-1, radius, matrix.Color333(0,7,0));
     matrix.drawCircle(center,center-1, radius, matrix.Color333(0,7,0));
+  }
+}
+
+// Copy of colorwheel from the example thing 
+void partyCircle() {
+  int      x, y, hue;
+  float    dx, dy, d;
+  uint8_t  sat, val;
+  uint16_t c;
+  for(y=0; y < matrix.width(); y++) {
+    dy = 15.5 - (float)y;
+    for(x=0; x < matrix.height(); x++) {
+      dx = 15.5 - (float)x;
+      d  = dx * dx + dy * dy;
+      if(d <= (16.5 * 16.5)) { // Inside the circle(ish)?
+        hue = (int)((atan2(-dy, dx) + PI) * 1536.0 / (PI * 2.0));
+        d = sqrt(d);
+        if(d > 15.5) {
+          // Do a little pseudo anti-aliasing along perimeter
+          sat = 255;
+          val = (int)((1.0 - (d - 15.5)) * 255.0 + 0.5);
+        } else
+        {
+          // White at center
+          sat = (int)(d / 15.5 * 255.0 + 0.5);
+          val = 255;
+        }
+        c = matrix.ColorHSV(hue, sat, val, true);
+      } else {
+        c = 0;
+      }
+      matrix.drawPixel(x, y, c);
+    }
   }
 }
 
@@ -219,7 +238,7 @@ void hourHand(int h, int m, int color) {
   // are in party mode, then the background is colored and the 
   // hand is black. 
   if (party) {
-    matrix.drawLine(midX, midY, xPixels, yPixels, black);
+    matrix.drawLine(midX, midY, xPixels, yPixels, matrix.Color333(0,0,0));
   } else {
     matrix.drawLine(midX, midY, xPixels, yPixels, color);
   }
@@ -260,15 +279,9 @@ void minuteHand(int m, int color) {
   // are in party mode, then the background is colored and the 
   // hand is black. 
   if (party) {
-    matrix.drawLine(midX, midY, xPixels, yPixels, matrix.Color333(0,0,0));
+    matrix.drawLine(midX, midY, xPixels, yPixels, black);
   } else {
     matrix.drawLine(midX, midY, xPixels, yPixels, color);
-  }
-
-  void draw() {
-    if (!party) {
-      
-    }
   }
 }
 
