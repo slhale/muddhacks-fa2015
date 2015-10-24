@@ -23,10 +23,16 @@ RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
 #define TIME_REQUEST 7 // ASCII bell character requests a time sync message
 
 void setup() {
-  int x, y;
-  Serial.print('testing, hello there');
+  // Start up the matrix
   matrix.begin();
-
+  
+  // Setup default colors
+  int green = matrix.Color333(0,7,0);
+  int blue = matrix.Color333(0,0,7);
+  int red = matrix.Color333(7,0,0);
+  int white = matrix.Color333(7,7,7);
+  
+  // Draw stuff 
   circle();
 //  delay(1000);
 //  wipe();
@@ -67,7 +73,7 @@ void center() {
 
 void hourHand(int hour, int minute) {
   float circleFraction = hour % 12;
-  float minuteAdjustment = (1.0 / 12.0) * (minute % 60); // Move hour hand within the hour
+  float minuteAdjustment = (1.0 / 12.0) / (minute % 60); // Move hour hand within the hour
   float angle = 2*M_PI * (circleFraction + minuteAdjustment); // in radians
   
   int radius = 16; // pixels
@@ -77,7 +83,7 @@ void hourHand(int hour, int minute) {
   int xPixels = middle + xLen;
   int yPixels = middle + yLen;
   
-  matrix.drawLine(middle, middle, xPixels, yPixels, matrix.Color333(0, 7, 7));
+  matrix.drawLine(middle, middle, xPixels, yPixels, blue + green);
 
 }
 
