@@ -66,10 +66,10 @@ void loop() {
   Serial.print("hour ");
   Serial.println(currentHour);
   
-//  if ((currentHour > lastHour) ||
-//       ((currentHour == 0) && (lastHour != 0)) {
-//    // update things
-//  }
+  if ( (currentHour > lastHour) ||
+       ((currentHour == 0) && (lastHour != 0)) ){
+    // update things
+  }
   
 }
 
