@@ -351,6 +351,9 @@ void hourHand(int h, int m, int color) {
     angle = -1 * angle;
   }
   
+  // Offset the angle so that up aligns with the words' up
+  angle = angle - (M_PI / 2);
+  
   int midX = 15;
   int midY = 15;
   int radius = 10;
@@ -393,6 +396,9 @@ void minuteHand(int m, int color) {
   if (counter) {
     angle = -1 * angle;
   }
+  
+  // Offset the angle so that up aligns with the words' up
+  angle = angle - (M_PI / 2);
   
   int midX = 15;
   int midY = 15;
