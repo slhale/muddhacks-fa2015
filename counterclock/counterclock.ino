@@ -258,7 +258,7 @@ void drawStems() {
  
     stemsCount ++;
 
-    if (stemsCount == 50) {
+    if (stemsCount == 32) {
       mode = "flash";
       stemsCount = 0;
     }
@@ -522,3 +522,4 @@ void endStems() {
   int stemsCount = 0;
   int stemsIterations = 0;
 }
+
