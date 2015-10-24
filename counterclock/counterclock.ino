@@ -50,7 +50,7 @@ boolean stemsParty = false;
 boolean dinner = false;
 
 //Stems variables
-string mode = "rainbow"; // rainbow, slide, flash
+String mode = "rainbow"; // rainbow, slide, flash
 boolean down = true;
 int height = 0;
 int colorStart = 0;
@@ -71,7 +71,7 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(5,59,50,24,10,2015); // change this
+  setTime(3,58,50,24,10,2015); // change this
 }
 
 void loop() {
