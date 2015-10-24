@@ -22,15 +22,15 @@ RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
 #define TIME_HEADER 'T' // Header tag for serial time sync message
 #define TIME_REQUEST 7 // ASCII bell character requests a time sync message
 
+// Setup default colors
+int green = matrix.Color333(0,7,0);
+int blue = matrix.Color333(0,0,7);
+int red = matrix.Color333(7,0,0);
+int white = matrix.Color333(7,7,7);
+
 void setup() {
   // Start up the matrix
   matrix.begin();
-  
-  // Setup default colors
-  int green = matrix.Color333(0,7,0);
-  int blue = matrix.Color333(0,0,7);
-  int red = matrix.Color333(7,0,0);
-  int white = matrix.Color333(7,7,7);
   
   // Draw stuff 
   circle();
@@ -38,7 +38,7 @@ void setup() {
 //  wipe();
   center();
   hourHand(4,20);
-  matrix.drawLine(16,15,31,0, matrix.Color333(7,7,7));
+  matrix.drawLine(16,15,31,0, white);
 }
 
 void loop() {
@@ -83,7 +83,7 @@ void hourHand(int hour, int minute) {
   int xPixels = middle + xLen;
   int yPixels = middle + yLen;
   
-  matrix.drawLine(middle, middle, xPixels, yPixels, blue + green);
+  matrix.drawLine(middle, middle, xPixels, yPixels, blue);
 
 }
 
