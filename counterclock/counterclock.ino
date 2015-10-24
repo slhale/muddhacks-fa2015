@@ -214,7 +214,25 @@ void drawStems() {
 }
 
 void drawDinner() {
+  // Random background
+  matrix.fillRect(0,0,32,32,red);
   
+  // Lots of random circles
+  int numCircles = random(5) + 3;
+  int r, g, b, radius;
+  for (int i = 0; i < numCircles; i++) {
+    r = random(7);
+    g = random(7);
+    b = random(7);
+    radius = random(16);
+    matrix.drawCircle(16,16, radius, matrix.Color333(r, g, b));
+  }
+  
+  // Write on top of background 'dinner'
+  string dinner = "DINNER";
+  for (int i = 0; i < 6; i ++) {
+    matrix.print(dinner[i]);      
+  }
 }
 
 /**
