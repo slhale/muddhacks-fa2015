@@ -36,13 +36,14 @@ void setup() {
   // Draw stuff 
 //  delay(1000);
 //  wipe();
-  center();
+  //center();
   //matrix.drawLine(16,15,31,0, white);
   hourHand(12, 0, white);
   hourHand(4,0, blue);
   hourHand(6,0, green);
   hourHand(9,0,red);
   circle();
+  matrix.drawPixel(16,16,matrix.Color333(0,7,7));
 }
 
 void loop() {
@@ -97,20 +98,18 @@ void hourHand(int h, int m, int color) {
   Serial.println(angle);
   
   int midX = 15;
-  int midy = 15;
-
-  if (angle < 1.5708) {
-    midX = 16;
-    midY = 16;
-  } else if (angle < 3.1416) {
-    midY = 16;
-  } else if (angle > 4.7124) {
-    midX = 16;
-  }
+  int midY = 15;
 
   int radius = 16; // pixels
   float xLen = radius * cos(angle);
   float yLen = radius * sin(angle);
+
+  if (xLen > 0) {
+    midX = 16;
+  }
+  if (yLen > 0) {
+    midY = 16;
+  }
   int xPixels = midX + xLen;
   int yPixels = midY + yLen;
   Serial.print('x pixels');
