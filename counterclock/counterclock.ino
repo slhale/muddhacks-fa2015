@@ -39,8 +39,10 @@ void setup() {
 //  wipe();
   center();
   //matrix.drawLine(16,15,31,0, white);
-  hourHand(12, 0);
-  hourHand(4,20);
+  //hourHand(12, 0, white);
+  hourHand(4,0, blue);
+  hourHand(6,0, green);
+  hourHand(9,0,red);
 }
 
 void loop() {
@@ -73,9 +75,9 @@ void center() {
   matrix.drawPixel(16,16, matrix.Color333(0,0,7));
 }
 
-void hourHand(int hour, int minute) {
-  float circleFraction = hour % 12;
-  float minuteAdjustment = (1.0 / 12.0) * ((minute % 60) / 60); // Move hour hand within the hour
+void hourHand(int h, int m, int color) {
+  float circleFraction = h % 12;
+  float minuteAdjustment = (1.0 / 12.0) * ((m % 60) / 60); // Move hour hand within the hour
   float angle = 2*M_PI * (12 / (circleFraction + minuteAdjustment)); // in radians
   Serial.print('angle');
   Serial.println(angle);
@@ -91,7 +93,7 @@ void hourHand(int hour, int minute) {
   Serial.print('y pixels');
   Serial.println(yPixels);
   
-  matrix.drawLine(middle, middle, xPixels, yPixels, blue);
+  matrix.drawLine(middle, middle, xPixels, yPixels, color);
 
 }
 
