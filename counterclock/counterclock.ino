@@ -227,7 +227,7 @@ void drawStems() {
 
 void drawDinner() {
   // Random background
-  matrix.fillRect(0,0,32,32,red);
+  //matrix.fillRect(0,0,32,32,red);
   
   // Lots of random circles
   int numCircles = random(5) + 3;
