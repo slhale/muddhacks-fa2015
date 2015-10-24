@@ -69,6 +69,7 @@ void loop() {
     boolean down = true;
 
     for (int i = 0; i < 24; i ++) {
+      wipe();
       writeStems(heightStart * 4, colorStart);
 
       colorStart ++;
