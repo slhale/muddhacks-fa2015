@@ -8,7 +8,6 @@
 #include <RGBmatrixPanel.h> // Hardware-specific library
 #include <Time.h>
 #include <math.h> // Include math for trig funtions for clock hands
-#include "RTClib.h"
 
 #define CLK 11
 #define LAT 9
@@ -246,10 +245,3 @@ static int getb(void) {
     return Serial.read();
 }
 
-void updateTime() {
-  RTC.adjust(DateTime(__DATE__, __TIME__));
-  DateTime now = RTC.now();
-
-  Serial.print(now.hour(), DEC);
-  Serial.print(now.minute(), DEC);
-}
