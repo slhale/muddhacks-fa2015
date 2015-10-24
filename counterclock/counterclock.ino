@@ -75,9 +75,6 @@ void loop() {
     currentHour = hour();
     currentMin = minute();
     currentSec = second();
-  
-    //  Serial.print("hour ");
-    //  Serial.println(currentHour);
     
     // If the minute has changed, update the clock 
     if ( (currentMin > lastMin) ||
@@ -85,7 +82,6 @@ void loop() {
       draw();
     }
   }
-  
 }
 
 void randomize() {
@@ -97,6 +93,11 @@ void randomize() {
   }
 }
 
+/**
+ * Draw all the components of the clock.
+ * Components include the background, the hour hand, 
+ * and the minute hand.
+ */
 void draw() {
   wipe();
   // Change order depending on party mode because the 
@@ -201,17 +202,6 @@ void partyCircle() {
       matrix.drawPixel(x, y, c);
     }
   }
-}
-
-void line() {
-  matrix.drawLine(0,0,15,15, matrix.Color333(7,7,7));
-}
-
-void center() {
-  matrix.drawPixel(15,15, matrix.Color333(7,7,7));
-  matrix.drawPixel(15,16, matrix.Color333(7,0,0));
-  matrix.drawPixel(16,15, matrix.Color333(0,7,0));
-  matrix.drawPixel(16,16, matrix.Color333(0,0,7));
 }
 
 /**
