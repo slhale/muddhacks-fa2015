@@ -261,7 +261,7 @@ void drawDinner() {
   matrix.setCursor(1, 14);
   matrix.setTextColor(black);
   for (int i = 0; i < 6; i ++) {
-    matrix.setCursor(i*5+1, i*6);
+    matrix.setCursor(i*5+1, i*5+1);
     matrix.print(dinner[i]);      
   }
 }
