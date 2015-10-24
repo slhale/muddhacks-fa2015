@@ -49,8 +49,12 @@ void setup() {
   hourHand(4,20, green);
   hourHand(5,0,white);
 //  hourHand(9,0,red);
-  circle();
   //matrix.drawPixel(16,16,matrix.Color333(0,7,7));
+
+  minuteHand(50,red);
+
+
+  circle();
 }
 
 void loop() {
@@ -62,10 +66,10 @@ void loop() {
   Serial.print("hour ");
   Serial.println(currentHour);
   
-  if ((currentHour > lastHour) ||
-       ((currentHour == 0) && (lastHour != 0)) {
-    // update things
-  }
+//  if ((currentHour > lastHour) ||
+//       ((currentHour == 0) && (lastHour != 0)) {
+//    // update things
+//  }
   
 }
 
@@ -171,7 +175,7 @@ void minuteHand(int m, int color) {
 
   int midX = 15;
   int midY = 15;
-  int radius = 16;
+  int radius = 15;
   float xLen = radius * cos(angle);
   float yLen = radius * sin(angle);
   
@@ -188,7 +192,7 @@ void minuteHand(int m, int color) {
   
   matrix.drawLine(midX, midY, xPixels, yPixels, color); 
 }
-
+/*
 void getPCtime() {
   // If time available from serial port, sync the DateTime library
   while (Serial1.available() >= TIME_MSG_LEN) { // Time message
