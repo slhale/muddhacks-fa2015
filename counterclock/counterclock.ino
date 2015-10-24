@@ -302,7 +302,7 @@ void minuteHand(int m, int color) {
 }
 
 void writeStems(int yloc, int startColor /* 0 = red...5 = purple */) {
-  matrix.setCursor(0, yloc);
+  matrix.setCursor(1, yloc);
   int colorNum = startColor;
   int stemsNum = 0;
 
