@@ -216,7 +216,7 @@ void drawStems() {
   // Slide red stems to center of screen
   if (mode == "slide" && stemsIterations % 100 == 0) {
     wipe();
-    writeStems(xOneStart, 0, 0, true);
+    //writeStems(xOneStart, 0, 0, true);
     //writeStems(xTwoStart, 8, 0, true);
     //writeStems(xThreeStart, 16, 0, true);
     //writeStems(xFourStart, 24, 0, true);
