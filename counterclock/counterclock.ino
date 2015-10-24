@@ -29,10 +29,14 @@ void loop() {
   int time;
 }
 
+void wipe() {
+  matrix.fill(matrix.Collor333(0,0,0));
+}
+
 void getPCtime() {
   // If time available from serial port, sync the DateTime library
-  while (Serial.available() >= TIME_MSG_LEN) { // Time message
-    if (Serial.read() == TIME_HEADER) {
+  while (Serial1.available() >= TIME_MSG_LEN) { // Time message
+    if (Serial1.read() == TIME_HEADER) {
       time_t pctime = 0;
       
       for (int i = 0; i < TIME_MSG_LEN - 1; i ++) {
