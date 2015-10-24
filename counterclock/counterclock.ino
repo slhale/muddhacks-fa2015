@@ -183,10 +183,10 @@ void drawStems() {
     // Move vertically
     if (down) {
       height ++;
-      antiheight --;
+      antiHeight --;
     } else {
       height --;
-      antiheight ++;
+      antiHeight ++;
     }
 
     // Reverse directions
