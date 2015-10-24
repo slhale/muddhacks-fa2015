@@ -98,7 +98,7 @@ void hourHand(int h, int m, int color) {
   float circleFraction = h % 12; // because there are 24 hours
   float hourAngle = 2.0*M_PI * circleFraction / 12.0; // in radians
   
-  float minuteAngle = ((double) (m % 60)) * M_PI / 30.0;
+  float minuteAngle = ((double) (m % 60)) * M_PI / 360.0;
   float angle = hourAngle + minuteAngle;
 
   /*
