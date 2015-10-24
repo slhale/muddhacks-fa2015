@@ -31,17 +31,17 @@ int white = matrix.Color333(7,7,7);
 void setup() {
   // Start up the matrix
   matrix.begin();
-  //Serial.begin(9600);
+  Serial.begin(9600);
   
   // Draw stuff 
 //  delay(1000);
 //  wipe();
   //center();
   //matrix.drawLine(16,15,31,0, white);
-  hourHand(12, 0, white);
-  hourHand(4,0, blue);
+//  hourHand(12, 0, white);
+//  hourHand(4,0, blue);
   hourHand(6,0, green);
-  hourHand(9,0,red);
+//  hourHand(9,0,red);
   circle();
   matrix.drawPixel(16,16,matrix.Color333(0,7,7));
 }
@@ -116,15 +116,18 @@ void hourHand(int h, int m, int color) {
   if (yLen > 0) {
     midY = 16;
   }
-  
-  int xPixels = midX + xLen;
-  int yPixels = midY + yLen;
-  /*
-  Serial.print('x pixels');
-  Serial.println(xPixels);
-  Serial.print('y pixels');
+  int xPixels = midX + (int)xLen;
+  int yPixels = midY + (int)yLen;
+//  Serial.print('x pixels');
+//  Serial.println(xPixels);
+//  Serial.print('y pixels');
+//  Serial.println(yPixels);
+
+  Serial.println(xLen);
+  Serial.println(yLen);
+
   Serial.println(yPixels);
-  */
+  Serial.println(midY);
   
   matrix.drawLine(midX, midY, xPixels, yPixels, color);
 }
