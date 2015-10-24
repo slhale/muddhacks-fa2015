@@ -48,7 +48,9 @@ boolean counter = false;
 boolean party = false;
 boolean stemsParty = false;
 
-float threshhold = 0.5;
+// changes probability for counter-clock
+// higher threshhold, higher probability
+int threshhold = 50;
 
 void setup() {
   // Start up the matrix
@@ -99,6 +101,10 @@ void loop() {
   
   //  Serial.print("hour ");
   //  Serial.println(currentHour);
+
+  if (currentHour % 6 == 0) {
+    randomize();
+  }
   
   // If the minute has changed, update the clock 
   if ( (currentMin > lastMin) ||
@@ -110,7 +116,7 @@ void loop() {
 }
 
 void randomize() {
-  long randNum = random();
+  int randNum = random(100);
   if (randNum < threshhold) {
     counter = true;
   } else {
