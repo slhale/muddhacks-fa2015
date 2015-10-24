@@ -46,7 +46,8 @@ void setup() {
   matrix.begin();
   Serial.begin(9600);
 
-  party = true;
+  //party = true;
+  //counter = true;
   
   setTime(1,30,00,24,10,2015); // change this
 
