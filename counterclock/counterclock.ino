@@ -26,8 +26,14 @@ RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
 int green = matrix.Color333(0,7,0);
 int blue = matrix.Color333(0,0,7);
 int red = matrix.Color333(7,0,0);
+int orange = matrix.Color333(7,4,0);
+int yellow = matrix.Color333(7,7,0);
+int purple = matrix.Color333(7,0,4);
 int white = matrix.Color333(7,7,7);
 int black = matrix.Color333(0,0,0);
+
+int rainbow[] = {red, orange, yellow, green, blue, purple};
+char stems[] = "stems!";
 
 // Timekeeper variables
 int lastHour = 0;
@@ -40,39 +46,61 @@ int currentSec = 0;
 // State variables
 boolean counter = false;
 boolean party = false;
+boolean stemsParty = false;
 
 void setup() {
   // Start up the matrix
   matrix.begin();
   Serial.begin(9600);
 
-  party = true;
+  stemsParty = true;
   setTime(1,3,00,24,10,2015); // change this
 
 }
 
 void loop() {
-  // Keep track of the current and last times 
-  lastHour = currentHour;
-  lastMin = currentMin;
-  lastSec = currentSec;
-  currentHour = hour();
-  currentMin = minute();
-  currentSec = second();
+  if (stemsParty) {
+    int colorStart = 0;
+    int heightStart = 0;
+    boolean down = true;
+
+    for (int i = 0; i < 24; i ++) {
+      writeStems(heightStart * 4, colorStart);
+
+      colorStart ++;
+      
+      if (down) {
+        heightStart ++;
+      } else {
+        heightStart --;
+      }
+
+      if (heightStart == 0 || heightStart == 8) {
+          down = !down;
+      }
+    }
+  } else {
+    // Keep track of the current and last times 
+    lastHour = currentHour;
+    lastMin = currentMin;
+    lastSec = currentSec;
+    currentHour = hour();
+    currentMin = minute();
+    currentSec = second();
   
-//  Serial.print("hour ");
-//  Serial.println(currentHour);
+  //  Serial.print("hour ");
+  //  Serial.println(currentHour);
   
-  // If the minute has changed, update the clock 
-  if ( (currentMin > lastMin) ||
-       ((currentMin == 0) && (lastMin != 0)) ) {
-    // Write in this order so that we don't have overlapping or invisible lines. 
-    wipe();
-    minuteHand(currentMin, blue);
-    hourHand(currentHour, currentMin, white);
-    circle();
+    // If the minute has changed, update the clock 
+    if ( (currentMin > lastMin) ||
+         ((currentMin == 0) && (lastMin != 0)) ) {
+      // Write in this order so that we don't have overlapping or invisible lines. 
+      wipe();
+      minuteHand(currentMin, blue);
+      hourHand(currentHour, currentMin, white);
+      circle();
+    }
   }
-  
 }
 
 /**
@@ -241,6 +269,28 @@ void minuteHand(int m, int color) {
     if (!party) {
       
     }
+  }
+}
+
+void writeStems(int yloc, int startColor /* 0 = red...5 = purple */) {
+  matrix.setCursor(0, yloc);
+  int colorNum = startColor;
+  int stemsNum = 0;
+
+  while (colorNum < 6) {
+    matrix.setTextColor(rainbow[colorNum]);
+    matrix.print(stems[stemsNum]);
+    colorNum ++;
+    stemsNum ++;
+  }
+
+  colorNum = 0;
+
+  while (colorNum < startColor) {
+    matrix.setTextColor(rainbow[colorNum]);
+    matrix.print(stems[stemsNum]);
+    colorNum ++;
+    stemsNum ++;
   }
 }
 
