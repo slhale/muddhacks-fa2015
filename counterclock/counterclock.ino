@@ -82,7 +82,13 @@ void loop() {
     if ( (currentMin > lastMin) ||
        ((currentMin == 0) && (lastMin != 0)) ) {
       if (currentHour % 6 == 0 && currentMin == 0) {
+        // might switch to counter at 12 or 6 o'clock
         randomize();
+      }
+      if (currentHour == 0) { // party mode from midnight to 1 am
+        party = true;
+      } else {
+        party = false;
       }
       draw();
     }
@@ -124,9 +130,9 @@ void drawStems() {
     int heightStart = 0;
     boolean down = true;
 
-    for (int i = 0; i < 24; i ++) {
+    for (int i = 0; i < 18; i ++) {
       wipe();
-      writeStems(heightStart * 4, colorStart);
+      writeStems(heightStart * 6, colorStart);
 
       colorStart ++;
       
@@ -136,7 +142,7 @@ void drawStems() {
         heightStart --;
       }
 
-      if (heightStart == 0 || heightStart == 7) {
+      if (heightStart == 0 || heightStart == 5) {
           down = !down;
       }
 
