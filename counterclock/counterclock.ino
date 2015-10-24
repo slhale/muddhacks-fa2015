@@ -47,6 +47,7 @@ int currentSec = 0;
 boolean counter = false;
 boolean party = false;
 boolean stemsParty = false;
+boolean dinner = false;
 
 // changes probability for counter-clock
 // higher threshhold, higher probability
@@ -83,6 +84,13 @@ void loop() {
       stemsParty = false;
       draw();
     } 
+  } else if (dinner) {
+    if (currentHour == 5+12 && currentMin == 0) {
+      drawDinner();
+    } else {
+      dinner = false;
+      draw();
+    } 
   } else { // aka when it's actually a clock
     // If the minute has changed, update the clock 
     if ( currentMin != lastMin ) {
@@ -105,6 +113,12 @@ void loop() {
       // Stems parties start at 3:59 am or pm 
       if (currentHour % 12 == 3 && currentMin == 59) {
         stemsParty = true;
+      }
+      
+      // Check when to intiate the dinner alert
+      // Dinner is at 5 pm 
+      if (currentHour == 5+12 && currentMin == 0) {
+        dinner = true;
       }
      
       draw();
@@ -197,6 +211,10 @@ void drawStems() {
 
   wipe();
   delay(500);
+}
+
+void drawDinner() {
+  
 }
 
 /**
