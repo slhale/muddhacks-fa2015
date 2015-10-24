@@ -40,11 +40,11 @@ void setup() {
   //matrix.drawLine(16,15,31,0, white);
 //  hourHand(12, 0, white);
   hourHand(4,0, blue);
-  //hourHand(4,30, green);
+  hourHand(4,20, green);
   hourHand(5,0,white);
 //  hourHand(9,0,red);
   circle();
-  matrix.drawPixel(16,16,matrix.Color333(0,7,7));
+  //matrix.drawPixel(16,16,matrix.Color333(0,7,7));
 }
 
 void loop() {
@@ -108,7 +108,7 @@ void hourHand(int h, int m, int color) {
   
   int midX = 15;
   int midY = 15;
-  int radius = 16;
+  int radius = 10;
   float xLen = radius * cos(angle);
   float yLen = radius * sin(angle);
   
@@ -127,11 +127,7 @@ void hourHand(int h, int m, int color) {
 //  Serial.print('y pixels');
 //  Serial.println(yPixels);
 
-  Serial.println(xLen);
-  Serial.println(yLen);
-
-  Serial.println(yPixels);
-  Serial.println(midY);
+  Serial.println(angle);
   
   matrix.drawLine(midX, midY, xPixels, yPixels, color);
 }
