@@ -27,7 +27,6 @@ int green = matrix.Color333(0,7,0);
 int blue = matrix.Color333(0,0,7);
 int red = matrix.Color333(7,0,0);
 int white = matrix.Color333(7,7,7);
-int black = matrix.Color333(0,0,0);
 
 // Timekeeper variables
 int lastHour = 0;
@@ -45,8 +44,7 @@ void setup() {
   // Start up the matrix
   matrix.begin();
   Serial.begin(9600);
-
-  party = true;
+  
   setTime(1,3,00,24,10,2015); // change this
 
 }
@@ -66,13 +64,24 @@ void loop() {
   // If the minute has changed, update the clock 
   if ( (currentMin > lastMin) ||
        ((currentMin == 0) && (lastMin != 0)) ) {
-    // Write in this order so that we don't have overlapping or invisible lines. 
-    wipe();
+    draw();
+  }
+  
+}
+
+void draw() {
+  wipe();
+  // Change order depending on party mode because the 
+  // drawing overwrites each other. 
+  if (party) {
+    circle();
+    minuteHand(currentMin, blue);
+    hourHand(currentHour, currentMin, white);
+  } else {
     minuteHand(currentMin, blue);
     hourHand(currentHour, currentMin, white);
     circle();
   }
-  
 }
 
 /**
@@ -80,6 +89,31 @@ void loop() {
  */
 void wipe() {
   matrix.fillRect(0,0,32,32,matrix.Color333(0,0,0));
+}
+
+/**
+ * Draw a circle. 
+ * The circle has a thickness of about 4 pixels and a
+ * diameter equal to the sidelength of the matrix square. 
+ */
+void circle() {
+  int center = matrix.width()/2;
+  int radius = 15;
+  
+  if (party) {
+    // Draw a filled in circle if we are in party mode
+    partyCircle();
+    
+  } else {
+    // Draw the outline of a circle if we are NOT in party mode
+    
+    // Draw multiple circles with different center points because the board 
+    // does not have an exact center point. There are 4 'centers' in a square.
+    matrix.drawCircle(center,center, radius, matrix.Color333(0,7,0));
+    matrix.drawCircle(center-1,center, radius, matrix.Color333(0,7,0));
+    matrix.drawCircle(center-1,center-1, radius, matrix.Color333(0,7,0));
+    matrix.drawCircle(center,center-1, radius, matrix.Color333(0,7,0));
+  }
 }
 
 // Copy of colorwheel from the example thing 
@@ -108,31 +142,6 @@ void partyCircle() {
       }
       matrix.drawPixel(x, y, c);
     }
-  }
-}
-
-/**
- * Draw a circle. 
- * The circle has a thickness of about 4 pixels and a
- * diameter equal to the sidelength of the matrix square. 
- */
-void circle() {
-  int center = matrix.width()/2;
-  int radius = 15;
-  
-  if (party) {
-    // Draw a filled in circle if we are in party mode
-    partyCircle();
-    
-  } else {
-    // Draw the outline of a circle if we are NOT in party mode
-    
-    // Draw multiple circles with different center points because the board 
-    // does not have an exact center point. There are 4 'centers' in a square.
-    matrix.drawCircle(center,center, radius, matrix.Color333(0,7,0));
-    matrix.drawCircle(center-1,center, radius, matrix.Color333(0,7,0));
-    matrix.drawCircle(center-1,center-1, radius, matrix.Color333(0,7,0));
-    matrix.drawCircle(center,center-1, radius, matrix.Color333(0,7,0));
   }
 }
 
@@ -190,8 +199,8 @@ void hourHand(int h, int m, int color) {
   // Normally the hand is colored on a black background, but if we 
   // are in party mode, then the background is colored and the 
   // hand is black. 
-  if (party) {
-    matrix.drawLine(midX, midY, xPixels, yPixels, black);
+  if (party)( {
+    matrix.drawLine(midX, midY, xPixels, yPixels, matrix.Color333(0,0,0));
   } else {
     matrix.drawLine(midX, midY, xPixels, yPixels, color);
   }
@@ -231,16 +240,10 @@ void minuteHand(int m, int color) {
   // Normally the hand is colored on a black background, but if we 
   // are in party mode, then the background is colored and the 
   // hand is black. 
-  if (party) {
+  if (party)( {
     matrix.drawLine(midX, midY, xPixels, yPixels, matrix.Color333(0,0,0));
   } else {
     matrix.drawLine(midX, midY, xPixels, yPixels, color);
-  }
-
-  void draw() {
-    if (!party) {
-      
-    }
   }
 }
 
