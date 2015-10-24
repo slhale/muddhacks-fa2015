@@ -50,7 +50,7 @@ boolean stemsParty = false;
 
 // changes probability for counter-clock
 // higher threshhold, higher probability
-int threshhold = 50;
+int threshhold = 10;
 
 void setup() {
   // Start up the matrix
@@ -61,7 +61,7 @@ void setup() {
   //counter = true;
   //stemsParty = true;
   
-  setTime(0,59,50,24,10,2015); // change this
+  setTime(5,59,50,24,10,2015); // change this
 }
 
 void loop() {
@@ -85,11 +85,11 @@ void loop() {
     } 
   } else { // aka when it's actually a clock
     // If the minute has changed, update the clock 
-    if ( currentMin != lastMin ) {
+    if ( currentSec != lastSec ) {
       // Have a chance of switching to or from counter-clock 
       // when the hour hand is in a vertical position (12 or 
       // 6 o'clock)
-      if (currentHour % 6 == 0 && currentMin == 0) {
+      if (currentHour % 6 == 0 && currentMin == 0 && currentSec == 0) {
         randomize();
       }
       
@@ -115,10 +115,9 @@ void loop() {
 
 void randomize() {
   int randNum = random(100);
+  Serial.println(randNum);
   if (randNum < threshhold) {
-    counter = true;
-  } else {
-    counter = false;
+    counter = !counter;
   }
 }
 
@@ -136,7 +135,7 @@ void draw() {
     minuteHand(currentMin,0);
     hourHand(currentHour, currentMin, 0);
   } else {
-    minuteHand(currentMin, blue);
+    minuteHand(currentSec, blue);
     hourHand(currentHour, currentMin, white);
     circle(green);
   }
