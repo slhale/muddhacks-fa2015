@@ -242,23 +242,19 @@ void drawDinner() {
     matrix.fillRect(0,0,32,32,matrix.ColorHSV(140.0, 255.0, 50.0, true));
   }
   
-  // Produce a probability of more circles being added to reduce the rate 
-  int moreCircles = random(3);
-  if (moreCircles < 2) {
-    // Lots of random circles that change each loop
-    int numCircles = random(5) + 3;
-    int r, g, b, radius, x, y;
-    for (int i = 0; i < numCircles; i++) {
-      // Randomize a bunch of variables defining the circle
-      r = random(7);
-      g = random(7);
-      b = random(7);
-      radius = random(16);
-      x = random(16)+8;
-      y = random(16)+8;
-      
-      matrix.drawCircle(x, y, radius, matrix.Color333(r, g, b));
-    }
+  // Lots of random circles that change each loop
+  int numCircles = random(5) + 3;
+  int r, g, b, radius, x, y;
+  for (int i = 0; i < numCircles; i++) {
+    // Randomize a bunch of variables defining the circle
+    r = random(7);
+    g = random(7);
+    b = random(7);
+    radius = random(16);
+    x = random(16)+8;
+    y = random(16)+8;
+    
+    matrix.drawCircle(x, y, radius, matrix.Color333(r, g, b));
   }
   
   // Write on top of background 'dinner'
