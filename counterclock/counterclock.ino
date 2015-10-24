@@ -259,7 +259,7 @@ void drawDinner() {
   String dinner = "DINNER";
   // Set the color and start location of the words
   matrix.setCursor(1, 14);
-  matrix.setTextColor(blue);
+  matrix.setTextColor(black);
   matrix.setTextSize(0.5); 
   for (int i = 0; i < 6; i ++) {
     matrix.print(dinner[i]);      
