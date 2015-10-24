@@ -73,7 +73,7 @@ void center() {
 
 void hourHand(int hour, int minute) {
   float circleFraction = hour % 12;
-  float minuteAdjustment = (1.0 / 12.0) / (minute % 60); // Move hour hand within the hour
+  float minuteAdjustment = (1.0 / 12.0) * ((minute % 60) / 60); // Move hour hand within the hour
   float angle = 2*M_PI * (circleFraction + minuteAdjustment); // in radians
   
   int radius = 16; // pixels
