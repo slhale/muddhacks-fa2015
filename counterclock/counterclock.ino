@@ -136,6 +136,34 @@ void hourHand(int h, int m, int color) {
   matrix.drawLine(midX, midY, xPixels, yPixels, color);
 }
 
+/**
+ * Draws the minute hand on the clock face
+ * @param m, the minute
+ * @param color, the color that the drawn hand should be
+ */
+void minuteHand(int m, int color) {
+  float angle = ((double) (m % 60)) * M_PI / 30.0;
+
+  int midX = 15;
+  int midY = 15;
+  int radius = 16;
+  float xLen = radius * cos(angle);
+  float yLen = radius * sin(angle);
+  
+  // Adjust the middle starting positions depending on the 
+  // quadrant of the hour, for prettiness 
+  if (xLen > 0) {
+    midX = 16;
+  }
+  if (yLen > 0) {
+    midY = 16;
+  }
+  int xPixels = midX + (int)xLen;
+  int yPixels = midY + (int)yLen;
+  
+  matrix.drawLine(midX, midY, xPixels, yPixels, color); 
+}
+
 void getPCtime() {
   // If time available from serial port, sync the DateTime library
   while (Serial1.available() >= TIME_MSG_LEN) { // Time message
