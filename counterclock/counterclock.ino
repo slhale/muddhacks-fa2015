@@ -27,6 +27,7 @@ int green = matrix.Color333(0,7,0);
 int blue = matrix.Color333(0,0,7);
 int red = matrix.Color333(7,0,0);
 int white = matrix.Color333(7,7,7);
+int black = matrix.Color333(0,0,0);
 
 // Timekeeper variables
 int lastHour = 0;
@@ -44,8 +45,10 @@ void setup() {
   // Start up the matrix
   matrix.begin();
   Serial.begin(9600);
+
+  party = true;
   
-  setTime(1,3,00,24,10,2015); // change this
+  setTime(1,30,00,24,10,2015); // change this
 
 }
 
@@ -118,6 +121,10 @@ void circle() {
 
 // Copy of colorwheel from the example thing 
 void partyCircle() {
+  int      x, y, hue;
+  float    dx, dy, d;
+  uint8_t  sat, val;
+  uint16_t c;
   for(y=0; y < matrix.width(); y++) {
     dy = 15.5 - (float)y;
     for(x=0; x < matrix.height(); x++) {
@@ -199,7 +206,7 @@ void hourHand(int h, int m, int color) {
   // Normally the hand is colored on a black background, but if we 
   // are in party mode, then the background is colored and the 
   // hand is black. 
-  if (party)( {
+  if (party) {
     matrix.drawLine(midX, midY, xPixels, yPixels, matrix.Color333(0,0,0));
   } else {
     matrix.drawLine(midX, midY, xPixels, yPixels, color);
@@ -240,8 +247,8 @@ void minuteHand(int m, int color) {
   // Normally the hand is colored on a black background, but if we 
   // are in party mode, then the background is colored and the 
   // hand is black. 
-  if (party)( {
-    matrix.drawLine(midX, midY, xPixels, yPixels, matrix.Color333(0,0,0));
+  if (party) {
+    matrix.drawLine(midX, midY, xPixels, yPixels, black);
   } else {
     matrix.drawLine(midX, midY, xPixels, yPixels, color);
   }
