@@ -136,11 +136,11 @@ void drawStems() {
         heightStart --;
       }
 
-      if (heightStart == 0 || heightStart == 8) {
+      if (heightStart == 0 || heightStart == 7) {
           down = !down;
       }
 
-      delay(100);
+      delay(1000);
     }
 }
 
