@@ -248,8 +248,8 @@ void drawStems() {
       xOneStart ++;
     }
 
-    if (xTwoStart > 2 && stemsCount % 2 == 0) {
-      xTwoStart --;
+    if (xTwoStart < 2 && stemsCount % 2 == 0) {
+      xTwoStart ++;
     }
 
     if (xThreeStart < 1) {
