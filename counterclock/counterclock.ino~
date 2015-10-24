@@ -48,9 +48,7 @@ boolean counter = false;
 boolean party = false;
 boolean stemsParty = false;
 
-// changes probability for counter-clock
-// higher threshhold, higher probability
-int threshhold = 50;
+float threshhold = 0.5;
 
 void setup() {
   // Start up the matrix
@@ -69,7 +67,7 @@ void setup() {
 void loop() {
   if (stemsParty) {
     drawStems();
-  } else { // aka when it's actually a clock
+  } else {
     // Keep track of the current and last times 
     lastHour = currentHour;
     lastMin = currentMin;
@@ -81,16 +79,13 @@ void loop() {
     // If the minute has changed, update the clock 
     if ( (currentMin > lastMin) ||
        ((currentMin == 0) && (lastMin != 0)) ) {
-        if (currentHour % 6 == 0) {
-    randomize();
-  }
       draw();
     }
   }
 }
 
 void randomize() {
-  int randNum = random(100);
+  long randNum = random();
   if (randNum < threshhold) {
     counter = true;
   } else {
@@ -109,9 +104,9 @@ void draw() {
   // drawing overwrites each other. 
   if (party) {
     matrix.fillRect(0,0,32,32,white); // make white background
-    circle(0);
-    minuteHand(currentMin,0);
-    hourHand(currentHour, currentMin, 0);
+    circle();
+    minuteHand(currentMin);
+    hourHand(currentHour, currentMin);
   } else {
     minuteHand(currentMin, blue);
     hourHand(currentHour, currentMin, white);
@@ -209,6 +204,17 @@ void partyCircle() {
   }
 }
 
+void line() {
+  matrix.drawLine(0,0,15,15, matrix.Color333(7,7,7));
+}
+
+void center() {
+  matrix.drawPixel(15,15, matrix.Color333(7,7,7));
+  matrix.drawPixel(15,16, matrix.Color333(7,0,0));
+  matrix.drawPixel(16,15, matrix.Color333(0,7,0));
+  matrix.drawPixel(16,16, matrix.Color333(0,0,7));
+}
+
 /**
  * Draws the hour hand on the clock face
  * @param h, the hour from 0 to 24
@@ -301,7 +307,7 @@ void minuteHand(int m, int color) {
 }
 
 void writeStems(int yloc, int startColor /* 0 = red...5 = purple */) {
-  matrix.setCursor(1, yloc);
+  matrix.setCursor(0, yloc);
   int colorNum = startColor;
   int stemsNum = 0;
 
