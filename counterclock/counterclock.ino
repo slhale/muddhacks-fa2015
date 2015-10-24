@@ -265,11 +265,23 @@ void drawStems() {
   }
 
   // Flash stems 4 times
-  if (mode == "flash" && stemsIterations % 100 == 0) {
+  if (mode == "flash" ) {
     if (stemsIterations % 200 == 0) {
-      wipe();
+      matrix.drawRect(0,0,32,8,black);
     } else if (stemsIterations % 100 == 0) {
       writeStems(1,12,0,true);
+    }
+
+    if ((stemsIterations - 20) % 70 == 0) {
+      matrix.drawRect(0,12,32,8,black);
+    } else if ((stemsIterations - 20) % 35 == 0) {
+      writeStems(2,12,0,true);
+    }
+
+    if ((stemsIterations + 50) % 240) == 0) {
+      matrix.drawRect(0,24,32,8,black);
+    } else if ((stemsIterations + 50) % 120) == 0) {
+      writeStems(1, 24, 0, true);
     }
   }
 }
