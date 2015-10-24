@@ -141,7 +141,7 @@ void drawStems() {
         heightStart --;
       }
 
-      if (heightStart == 0 || heightStart == 5) {
+      if (heightStart == 0 || heightStart == 4) {
           down = !down;
       }
 
