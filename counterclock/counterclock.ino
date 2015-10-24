@@ -66,6 +66,8 @@ void circle() {
   int center = matrix.width()/2;
   int radius = 15;
   
+  // Draw multiple circles with different center points because the board 
+  // does not have an exact center point. There are 4 'centers' in a square.
   matrix.drawCircle(center,center, radius, matrix.Color333(0,7,0));
   matrix.drawCircle(center-1,center, radius, matrix.Color333(0,7,0));
   matrix.drawCircle(center-1,center-1, radius, matrix.Color333(0,7,0));
@@ -91,34 +93,40 @@ void center() {
  * @param color, the color that the drawn hand should be
  */
 void hourHand(int h, int m, int color) {
+  // Calculate the angle of the hour hand. 
   float circleFraction = h % 12; // because there are 24 hours
   float minuteAdjustment = (1.0 / 12.0) * ((m % 60) / 60); // Move hour hand within the hour
   float angle = 2*M_PI * ((circleFraction + minuteAdjustment)/ 12.0); // in radians
+  /*
   Serial.print('angle');
   Serial.println(angle);
+  */
   
   int midX = 15;
   int midY = 15;
-
-  int radius = 16; // pixels
+  int radius = 16;
   float xLen = radius * cos(angle);
   float yLen = radius * sin(angle);
-
+  
+  // Adjust the middle starting positions depending on the 
+  // quadrant of the hour, for prettiness 
   if (xLen > 0) {
     midX = 16;
   }
   if (yLen > 0) {
     midY = 16;
   }
+  
   int xPixels = midX + xLen;
   int yPixels = midY + yLen;
+  /*
   Serial.print('x pixels');
   Serial.println(xPixels);
   Serial.print('y pixels');
   Serial.println(yPixels);
+  */
   
   matrix.drawLine(midX, midY, xPixels, yPixels, color);
-
 }
 
 void getPCtime() {
