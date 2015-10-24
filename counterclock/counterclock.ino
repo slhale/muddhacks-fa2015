@@ -75,6 +75,8 @@ void hourHand(int hour, int minute) {
   float circleFraction = hour % 12;
   float minuteAdjustment = (1.0 / 12.0) * ((minute % 60) / 60); // Move hour hand within the hour
   float angle = 2*M_PI * (circleFraction + minuteAdjustment); // in radians
+  Serial.print('angle');
+  Serial.println(angle);
   
   int radius = 16; // pixels
   int middle = matrix.width() / 2; // pixels
@@ -82,6 +84,10 @@ void hourHand(int hour, int minute) {
   float yLen = radius * sin(angle);
   int xPixels = middle + xLen;
   int yPixels = middle + yLen;
+  Serial.print('x pixels');
+  Serial.println(xPixels);
+  Serial.print('y pixels');
+  Serial.println(yPixels);
   
   matrix.drawLine(middle, middle, xPixels, yPixels, blue);
 
