@@ -200,48 +200,23 @@ void minuteHand(int m, int color) {
   
   matrix.drawLine(midX, midY, xPixels, yPixels, color); 
 }
-/*
-void getPCtime() {
-  // If time available from serial port, sync the DateTime library
-  while (Serial1.available() >= TIME_MSG_LEN) { // Time message
-    if (Serial1.read() == TIME_HEADER) {
+
+void updateTime() {
+  for (int i == 0; i < 11; i ++) {
+    char c = Serial.read();
+
+    if (c == 'T') {
       time_t pctime = 0;
-      
-      for (int i = 0; i < TIME_MSG_LEN - 1; i ++) {
-        char c = Serial.read();
+
+      for (int j = 0; j < 10; j ++) {
+        c = Serial.read();
         
         if (c >= '0' && c <= '9') {
-          pctime = (10 * pctime) + (c - '0'); // Converts digits to a number
+          pctime = (10 * pctime) + (c - '0');
         }
-          
-          setTime(pctime); // Sync DateTime clock to the time received on the serial port
       }
+
+      setTime(pctime);
     }
   }
 }
-*/
-
-/*
-void getTime() {
-  time_t t;
-  int c;
-
-  do {
-    Serial.println("?T");
-    t = 0;
-
-    while ('T' != getb());
-    while (('0' <= (c = getb())) && (c <= '9')) {
-      t = 10 * t + (c & 0x0F);
-    }
-
-    while (c != '!');
-      set_time(ss(t));
-}
-*/
-
-static int getb(void) {
-  while (!(Serial.available() > 0));
-    return Serial.read();
-}
-
