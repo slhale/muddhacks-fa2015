@@ -31,18 +31,20 @@ int white = matrix.Color333(7,7,7);
 void setup() {
   // Start up the matrix
   matrix.begin();
+  //Serial.begin(9600);
   
   // Draw stuff 
   circle();
 //  delay(1000);
 //  wipe();
   center();
+  //matrix.drawLine(16,15,31,0, white);
+  hourHand(12, 0);
   hourHand(4,20);
-  matrix.drawLine(16,15,31,0, white);
 }
 
 void loop() {
-  int time;
+//  int time;
 }
 
 void wipe() {
@@ -73,7 +75,7 @@ void center() {
 
 void hourHand(int hour, int minute) {
   float circleFraction = hour % 12;
-  float minuteAdjustment = (1.0 / 12.0) * ((minute % 60) / 60); // Move hour hand within the hour
+  float minuteAdjustment = 0;// (1.0 / 12.0) * ((minute % 60) / 60); // Move hour hand within the hour
   float angle = 2*M_PI * (circleFraction + minuteAdjustment); // in radians
   Serial.print('angle');
   Serial.println(angle);
