@@ -245,7 +245,7 @@ void drawDinner() {
   }
   
   // Write on top of background 'dinner'
-  string dinner = "DINNER";
+  String dinner = "DINNER";
   for (int i = 0; i < 6; i ++) {
     matrix.print(dinner[i]);      
   }
