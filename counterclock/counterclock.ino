@@ -59,6 +59,9 @@ void loop() {
   currentHour = hour();
   currentMin = minute();
   
+  Serial.print("hour ");
+  Serial.println(currentHour);
+  
   if ((currentHour > lastHour) ||
        ((currentHour == 0) && (lastHour != 0)) {
     // update things
