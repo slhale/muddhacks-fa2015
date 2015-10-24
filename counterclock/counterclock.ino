@@ -48,7 +48,9 @@ boolean counter = false;
 boolean party = false;
 boolean stemsParty = false;
 
-float threshhold = 0.5;
+// changes probability for counter-clock
+// higher threshhold, higher probability
+int threshhold = 50;
 
 void setup() {
   // Start up the matrix
@@ -67,7 +69,7 @@ void setup() {
 void loop() {
   if (stemsParty) {
     drawStems();
-  } else {
+  } else { // aka when it's actually a clock
     // Keep track of the current and last times 
     lastHour = currentHour;
     lastMin = currentMin;
@@ -79,13 +81,16 @@ void loop() {
     // If the minute has changed, update the clock 
     if ( (currentMin > lastMin) ||
        ((currentMin == 0) && (lastMin != 0)) ) {
+        if (currentHour % 6 == 0) {
+    randomize();
+  }
       draw();
     }
   }
 }
 
 void randomize() {
-  long randNum = random();
+  int randNum = random(100);
   if (randNum < threshhold) {
     counter = true;
   } else {
@@ -104,9 +109,9 @@ void draw() {
   // drawing overwrites each other. 
   if (party) {
     matrix.fillRect(0,0,32,32,white); // make white background
-    circle();
-    minuteHand(currentMin);
-    hourHand(currentHour, currentMin);
+    circle(0);
+    minuteHand(currentMin,0);
+    hourHand(currentHour, currentMin, 0);
   } else {
     minuteHand(currentMin, blue);
     hourHand(currentHour, currentMin, white);
