@@ -29,6 +29,7 @@ void setup() {
   circle();
 //  delay(1000);
 //  wipe();
+  center();
 }
 
 void loop() {
@@ -47,6 +48,17 @@ void circle() {
   matrix.drawCircle(center-1,center, radius, matrix.Color333(0,7,0));
   matrix.drawCircle(center-1,center-1, radius, matrix.Color333(0,7,0));
   matrix.drawCircle(center,center-1, radius, matrix.Color333(0,7,0));
+}
+
+void line() {
+  matrix.drawLine(0,0,15,15, matrix.Color333(7,7,7));
+}
+
+void center() {
+  matrix.drawPixel(15,15, matrix.Color333(7,7,7));
+  matrix.drawPixel(15,16, matrix.Color333(7,0,0));
+  matrix.drawPixel(16,15, matrix.Color333(0,7,0));
+  matrix.drawPixel(16,16, matrix.Color333(0,0,7));
 }
 
 void getPCtime() {
