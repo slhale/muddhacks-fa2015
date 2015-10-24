@@ -85,6 +85,8 @@ void loop() {
       if (heightStart == 0 || heightStart == 8) {
           down = !down;
       }
+
+      delay(100);
     }
   } else {
     // Keep track of the current and last times 
@@ -121,6 +123,7 @@ void draw() {
   // Change order depending on party mode because the 
   // drawing overwrites each other. 
   if (party) {
+    matrix.fillRect(0,0,32,32,white); // make white background
     circle();
     minuteHand(currentMin, blue);
     hourHand(currentHour, currentMin, white);
