@@ -146,6 +146,10 @@ void drawStems() {
           down = !down;
       }
 
+      if (colorStart == 6) {
+        colorStart = 0;
+      }
+
       delay(1000);
     }
 }
