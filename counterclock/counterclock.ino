@@ -48,6 +48,8 @@ boolean counter = false;
 boolean party = false;
 boolean stemsParty = false;
 
+float threshhold = 0.5;
+
 void setup() {
   // Start up the matrix
   matrix.begin();
@@ -103,6 +105,15 @@ void loop() {
     }
   }
   
+}
+
+void randomize() {
+  long randNum = random();
+  if (randNum < threshhold) {
+    counter = true;
+  } else {
+    counter = false;
+  }
 }
 
 void draw() {
