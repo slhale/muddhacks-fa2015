@@ -49,7 +49,7 @@ boolean party = false;
 boolean stemsParty = false;
 boolean dinner = false;
 boolean christmas = false;
-boolean newYears = false;
+boolean ny = false;
 
 // Stems variables
 String mode = "rainbow"; // rainbow, slide, flash
@@ -66,9 +66,8 @@ int stemsIterations = 0;
 
 // New Years Variables
 int nyCount = 10;
-int nyIterations = 0;
 
-// changes probability for counter-clock
+// changes percent probability for counter-clock
 // higher threshhold, higher probability
 int threshhold = 50;
 
@@ -84,7 +83,7 @@ void setup() {
   /****************************************************************************/
   /****************************************************************************/
   /****************************************************************************/
-  setTime(3,58,50,24,10,2015); // change this
+  setTime(23,59,49,31,12,2015); // change this
   /****************************************************************************/
   /****************************************************************************/
   /****************************************************************************/
@@ -102,7 +101,6 @@ void loop() {
 
   Serial.println(currentHour); // somehow it needs the printing
     // for emotional support
-  
   if (stemsParty) {
     if (currentHour % 12 == 3 && currentMin == 59) {
       drawStems();
@@ -120,6 +118,11 @@ void loop() {
     } 
   } else { // aka when it's actually a clock
     // If the minute has changed, update the clock 
+    if (currentSec != lastSec) {
+      if (day() == 31 && month() == 12 && currentHour == 23 && currentMin == 59 && currentSec >= 50) { 
+        newYears();
+      }
+    }
     if ( currentMin != lastMin ) {
       // Have a chance of switching to or from counter-clock 
       // when the hour hand is in a vertical position (12 or 
@@ -153,6 +156,8 @@ void loop() {
       } else {
         christmas = false;
       }
+
+      
      
       draw();
     }
@@ -534,39 +539,25 @@ void endStems() {
 }
 
 void newYears() {
-  if (nyIterations % 1000 == 0 && nyCount > 2) {
-    matrix.setCursor(8,8);
+  if (nyCount > 2) {
+    wipe();
     matrix.setTextSize(2);
     matrix.setTextColor(orange);
 
     if (nyCount == 10) {
-      
+      matrix.setCursor(4, 8);
+    } else  {
+      matrix.setCursor(11, 8);
     }
-    if (nyCount == 10) {
-      
-    }
-    if (nyCount == 10) {
-      
-    }
-    if (nyCount == 10) {
-      
-    }
-    if (nyCount == 10) {
-      
-    }
-    if (nyCount == 10) {
-      
-    }
-    if (nyCount == 10) {
-      
-    }
-    if (nyCount == 10) {
-      
-    }
+    
     matrix.print(nyCount);
  
     nyCount --;
   }
-
-  nyIterations ++;
 }
+
+void nyEnd() {
+  nyCount = 0;
+  ny = false;
+}
+
