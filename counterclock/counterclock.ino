@@ -59,7 +59,7 @@ void setup() {
 
   //party = true;
   //counter = true;
-  //stemsParty = true;
+  stemsParty = true;
   
   setTime(1,30,00,24,10,2015); // change this
 
@@ -84,11 +84,19 @@ void loop() {
         // might switch to counter at 12 or 6 o'clock
         randomize();
       }
+      
       if (currentHour == 0) { // party mode from midnight to 1 am
         party = true;
       } else {
         party = false;
       }
+
+      if (currentHour % 12 == 3 && currentMin == 59) {
+        stemsParty = true;
+      } else {
+        stemsParty = false;
+      }
+      
       draw();
     }
   }
