@@ -58,7 +58,7 @@ int antiHeight = 4;
 int colorStart = 0;
 int antiColorStart = 5;
 int xOneStart = -32;
-int xTwoStart = -16;
+int xTwoStart = 48;
 int xThreeStart = -62;
 int stemsCount = 0;
 int stemsIterations = 0;
@@ -241,8 +241,8 @@ void drawStems() {
       xOneStart ++;
     }
 
-    if (xTwoStart < 2 && stemsCount % 2 == 0) {
-      xTwoStart ++;
+    if (xTwoStart > 2 && stemsCount % 2 == 0) {
+      xTwoStart --;
     }
 
     if (xThreeStart < 1) {
