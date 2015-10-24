@@ -234,7 +234,7 @@ void drawStems() {
   if (mode == "slide" && stemsIterations % 100 == 0) {
     wipe();
     writeStems(xOneStart, 0, 0, true);
-    //writeStems(xTwoStart, 12, 0, true);
+    writeStems(xTwoStart, 12, 0, true);
     writeStems(xThreeStart, 24, 0, true);
 
     if (xOneStart < 1) {
@@ -242,7 +242,7 @@ void drawStems() {
     }
 
     if (xTwoStart > 2 && stemsCount % 2 == 0) {
-      xTwoStart ++;
+      xTwoStart --;
     }
 
     if (xThreeStart < 1) {
