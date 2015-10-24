@@ -50,10 +50,18 @@ void loop() {
 //  int time;
 }
 
+/**
+ * Set all the pixels of the matrix to be dark. 
+ */
 void wipe() {
   matrix.fillRect(0,0,32,32,matrix.Color333(0,0,0));
 }
 
+/**
+ * Draw a circle. 
+ * The circle has a thickness of about 4 pixels and a
+ * diameter equal to the sidelength of the matrix square. 
+ */
 void circle() {
   int center = matrix.width()/2;
   int radius = 15;
@@ -76,6 +84,12 @@ void center() {
   matrix.drawPixel(16,16, matrix.Color333(0,0,7));
 }
 
+/**
+ * Draws the hour hand on the clock face
+ * @param h, the hour from 0 to 24
+ * @param m, the minute
+ * @param color, the color that the drawn hand should be
+ */
 void hourHand(int h, int m, int color) {
   float circleFraction = h % 12; // because there are 24 hours
   float minuteAdjustment = (1.0 / 12.0) * ((m % 60) / 60); // Move hour hand within the hour
