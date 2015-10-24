@@ -24,6 +24,7 @@ RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
 void setup() {
   int x, y;
   Serial.print('testing, hello there');
+  matrix.begin();
 }
 
 void loop() {
@@ -32,6 +33,13 @@ void loop() {
 
 void wipe() {
   matrix.fill(matrix.Collor333(0,0,0));
+}
+
+void circle() {
+  matrix.drawCircle(center,center, radius, matrix.Color333(0,7,0));
+  matrix.drawCircle(center+1,center, radius, matrix.Color333(0,7,0));
+  matrix.drawCircle(center+1,center+1, radius, matrix.Color333(0,7,0));
+  matrix.drawCircle(center,center+1, radius, matrix.Color333(0,7,0));
 }
 
 void getPCtime() {
