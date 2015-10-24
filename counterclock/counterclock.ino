@@ -260,8 +260,8 @@ void drawDinner() {
   // Set the color and start location of the words
   matrix.setCursor(1, 14);
   matrix.setTextColor(black);
-  matrix.setTextSize(0.5); 
   for (int i = 0; i < 6; i ++) {
+    matrix.setCursor(i*5+1, i*6);
     matrix.print(dinner[i]);      
   }
 }
