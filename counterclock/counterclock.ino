@@ -33,7 +33,7 @@ int white = matrix.Color333(7,7,7);
 int black = matrix.Color333(0,0,0);
 
 int rainbow[] = {red, orange, yellow, green, blue, purple};
-char stems[] = "stems";
+char stems[] = "stems ";
 
 // Timekeeper variables
 int lastHour = 0;
@@ -70,7 +70,7 @@ void loop() {
     int heightStart = 0;
     boolean down = true;
 
-    for (int i = 0; i < 24; i ++) {
+    for (int i = 0; i < 6; i ++) {
       wipe();
       writeStems(heightStart * 4, colorStart);
 
@@ -86,7 +86,7 @@ void loop() {
           down = !down;
       }
 
-      delay(100);
+      delay(20);
     }
   } else {
     // Keep track of the current and last times 
