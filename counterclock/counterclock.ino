@@ -28,10 +28,16 @@ int blue = matrix.Color333(0,0,7);
 int red = matrix.Color333(7,0,0);
 int white = matrix.Color333(7,7,7);
 
+int lastHour = 0;
+int lastMin = 0;
+int currentHour = 0;
+int currentMin = 0;
+
 void setup() {
   // Start up the matrix
   matrix.begin();
   Serial.begin(9600);
+  setTime(00,00,00,24,10,2015);
   
   // Draw stuff 
 //  delay(1000);
@@ -40,15 +46,27 @@ void setup() {
   //matrix.drawLine(16,15,31,0, white);
 //  hourHand(12, 0, white);
   hourHand(4,0, blue);
-  //hourHand(4,30, green);
+  hourHand(4,20, green);
   hourHand(5,0,white);
 //  hourHand(9,0,red);
   circle();
-  matrix.drawPixel(16,16,matrix.Color333(0,7,7));
+  //matrix.drawPixel(16,16,matrix.Color333(0,7,7));
 }
 
 void loop() {
-//  int time;
+  lastHour = currentHour;
+  lastMin = currentMin;
+  currentHour = hour();
+  currentMin = minute();
+  
+  Serial.print("hour ");
+  Serial.println(currentHour);
+  
+  if ((currentHour > lastHour) ||
+       ((currentHour == 0) && (lastHour != 0)) {
+    // update things
+  }
+  
 }
 
 /**
@@ -108,7 +126,7 @@ void hourHand(int h, int m, int color) {
   
   int midX = 15;
   int midY = 15;
-  int radius = 16;
+  int radius = 10;
   float xLen = radius * cos(angle);
   float yLen = radius * sin(angle);
   
@@ -120,18 +138,25 @@ void hourHand(int h, int m, int color) {
   if (yLen > 0) {
     midY = 16;
   }
+  
   int xPixels = midX + (int)xLen;
   int yPixels = midY + (int)yLen;
+  
 //  Serial.print('x pixels');
 //  Serial.println(xPixels);
 //  Serial.print('y pixels');
 //  Serial.println(yPixels);
 
+
+  Serial.println(angle);
+
+/*
   Serial.println(xLen);
   Serial.println(yLen);
 
   Serial.println(yPixels);
   Serial.println(midY);
+*/
   
   matrix.drawLine(midX, midY, xPixels, yPixels, color);
 }
@@ -182,3 +207,4 @@ void getPCtime() {
     }
   }
 }
+*/
