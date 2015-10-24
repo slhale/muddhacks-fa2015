@@ -33,7 +33,7 @@ int white = matrix.Color333(7,7,7);
 int black = matrix.Color333(0,0,0);
 
 int rainbow[] = {red, orange, yellow, green, blue, purple};
-char stems[] = "stems!";
+char stems[] = "stems";
 
 // Timekeeper variables
 int lastHour = 0;
