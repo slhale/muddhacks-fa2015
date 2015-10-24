@@ -25,6 +25,10 @@ void setup() {
   int x, y;
   Serial.print('testing, hello there');
   matrix.begin();
+
+  circle();
+//  delay(1000);
+//  wipe();
 }
 
 void loop() {
@@ -32,14 +36,17 @@ void loop() {
 }
 
 void wipe() {
-  matrix.fill(matrix.Collor333(0,0,0));
+  matrix.fillRect(0,0,32,32,matrix.Color333(0,0,0));
 }
 
 void circle() {
+  int center = matrix.width()/2;
+  int radius = 15;
+  
   matrix.drawCircle(center,center, radius, matrix.Color333(0,7,0));
-  matrix.drawCircle(center+1,center, radius, matrix.Color333(0,7,0));
-  matrix.drawCircle(center+1,center+1, radius, matrix.Color333(0,7,0));
-  matrix.drawCircle(center,center+1, radius, matrix.Color333(0,7,0));
+  matrix.drawCircle(center-1,center, radius, matrix.Color333(0,7,0));
+  matrix.drawCircle(center-1,center-1, radius, matrix.Color333(0,7,0));
+  matrix.drawCircle(center,center-1, radius, matrix.Color333(0,7,0));
 }
 
 void getPCtime() {
