@@ -141,11 +141,11 @@ void drawStems() {
         heightStart --;
       }
 
-      if (heightStart == 0 || heightStart == 8) {
+      if (heightStart == 0 || heightStart == 7) {
           down = !down;
       }
 
-      delay(100);
+      delay(1000);
     }
 }
 
@@ -306,7 +306,7 @@ void minuteHand(int m, int color) {
 }
 
 void writeStems(int yloc, int startColor /* 0 = red...5 = purple */) {
-  matrix.setCursor(0, yloc);
+  matrix.setCursor(1, yloc);
   int colorNum = startColor;
   int stemsNum = 0;
 
