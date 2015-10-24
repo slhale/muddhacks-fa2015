@@ -53,10 +53,10 @@ void setup() {
   matrix.begin();
   Serial.begin(9600);
 
-  stemsParty = true;
   setTime(1,3,00,24,10,2015); // change this
   //party = true;
   //counter = true;
+  //stemsParty = true;
   
   setTime(1,30,00,24,10,2015); // change this
 
@@ -98,7 +98,8 @@ void loop() {
   // If the minute has changed, update the clock 
   if ( (currentMin > lastMin) ||
        ((currentMin == 0) && (lastMin != 0)) ) {
-    draw();
+      draw();
+    }
   }
   
 }
