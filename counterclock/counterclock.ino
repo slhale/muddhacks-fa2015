@@ -122,8 +122,6 @@ void circle() {
 
 // Copy of colorwheel from the example thing 
 void partyCircle() {
-  int newval = 100; // TESTING for less bright circle
-  
   int      x, y, hue;
   float    dx, dy, d;
   uint8_t  sat, val;
@@ -146,7 +144,7 @@ void partyCircle() {
           sat = (int)(d / 15.5 * 255.0 + 0.5);
           val = 255;
         }
-        c = matrix.ColorHSV(hue, sat, newval, true);
+        c = matrix.ColorHSV(hue, sat, val, true);
       } else {
         c = 0;
       }
