@@ -57,7 +57,6 @@ void setup() {
   matrix.begin();
   Serial.begin(9600);
 
-  setTime(1,3,00,24,10,2015); // change this
   //party = true;
   //counter = true;
   //stemsParty = true;
@@ -81,16 +80,16 @@ void loop() {
     // If the minute has changed, update the clock 
     if ( (currentMin > lastMin) ||
        ((currentMin == 0) && (lastMin != 0)) ) {
-        if (currentHour % 6 == 0 && currentMin == 0) {
-          // might switch to counter at 12 or 6 o'clock
-          randomize();
-        }
-        if (currentHour == 0) { // party mode from midnight to 1 am
-          party = true;
-        } else {
-          party = false;
-        }
-        draw();
+      if (currentHour % 6 == 0 && currentMin == 0) {
+        // might switch to counter at 12 or 6 o'clock
+        randomize();
+      }
+      if (currentHour == 0) { // party mode from midnight to 1 am
+        party = true;
+      } else {
+        party = false;
+      }
+      draw();
     }
   }
 }
@@ -256,8 +255,6 @@ void hourHand(int h, int m, int color) {
   
   int xPixels = midX + (int)xLen;
   int yPixels = midY + (int)yLen;
-  
-  Serial.println(angle);
   
   // Normally the hand is colored on a black background, but if we 
   // are in party mode, then the background is colored and the 
