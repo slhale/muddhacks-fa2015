@@ -28,12 +28,17 @@ int blue = matrix.Color333(0,0,7);
 int red = matrix.Color333(7,0,0);
 int white = matrix.Color333(7,7,7);
 
+// Timekeeper variables
 int lastHour = 0;
 int lastMin = 0;
 int lastSec = 0;
 int currentHour = 0;
 int currentMin = 0;
 int currentSec = 0;
+
+// State variables
+boolean counter = false;
+boolean party = false;
 
 void setup() {
   // Start up the matrix
@@ -103,12 +108,20 @@ void circle() {
   int center = matrix.width()/2;
   int radius = 15;
   
-  // Draw multiple circles with different center points because the board 
-  // does not have an exact center point. There are 4 'centers' in a square.
-  matrix.drawCircle(center,center, radius, matrix.Color333(0,7,0));
-  matrix.drawCircle(center-1,center, radius, matrix.Color333(0,7,0));
-  matrix.drawCircle(center-1,center-1, radius, matrix.Color333(0,7,0));
-  matrix.drawCircle(center,center-1, radius, matrix.Color333(0,7,0));
+  if (party) {
+    // Draw a filled in circle if we are in party mode
+    matrix.fillCircle(center,center,radius+1, matrix.Color333(0,7,0));
+    
+  } else {
+    // Draw the outline of a circle if we are NOT in party mode
+    
+    // Draw multiple circles with different center points because the board 
+    // does not have an exact center point. There are 4 'centers' in a square.
+    matrix.drawCircle(center,center, radius, matrix.Color333(0,7,0));
+    matrix.drawCircle(center-1,center, radius, matrix.Color333(0,7,0));
+    matrix.drawCircle(center-1,center-1, radius, matrix.Color333(0,7,0));
+    matrix.drawCircle(center,center-1, radius, matrix.Color333(0,7,0));
+  }
 }
 
 
@@ -136,11 +149,12 @@ void hourHand(int h, int m, int color) {
   
   float minuteAngle = ((double) (m % 60)) * M_PI / 360.0;
   float angle = hourAngle + minuteAngle;
-
-  /*
-  Serial.print('angle');
-  Serial.println(angle);
-  */
+  
+  // If we are in counter-clock mode, then the angle is reversed so 
+  // that the hands progress in the opposite direction. 
+  if (counter) {
+    angle = -1 * angle;
+  }
   
   int midX = 15;
   int midY = 15;
@@ -160,23 +174,16 @@ void hourHand(int h, int m, int color) {
   int xPixels = midX + (int)xLen;
   int yPixels = midY + (int)yLen;
   
-//  Serial.print('x pixels');
-//  Serial.println(xPixels);
-//  Serial.print('y pixels');
-//  Serial.println(yPixels);
-
-
   Serial.println(angle);
-
-/*
-  Serial.println(xLen);
-  Serial.println(yLen);
-
-  Serial.println(yPixels);
-  Serial.println(midY);
-*/
   
-  matrix.drawLine(midX, midY, xPixels, yPixels, color);
+  // Normally the hand is colored on a black background, but if we 
+  // are in party mode, then the background is colored and the 
+  // hand is black. 
+  if (party)( {
+    matrix.drawLine(midX, midY, xPixels, yPixels, matrix.Color333(0,0,0));
+  } else {
+    matrix.drawLine(midX, midY, xPixels, yPixels, color);
+  }
 }
 
 /**
@@ -186,7 +193,13 @@ void hourHand(int h, int m, int color) {
  */
 void minuteHand(int m, int color) {
   float angle = ((double) (m % 60)) * M_PI / 30.0;
-
+  
+  // If we are in counter-clock mode, then the angle is reversed so 
+  // that the hands progress in the opposite direction. 
+  if (counter) {
+    angle = -1 * angle;
+  }
+  
   int midX = 15;
   int midY = 15;
   int radius = 15;
@@ -204,6 +217,13 @@ void minuteHand(int m, int color) {
   int xPixels = midX + (int)xLen;
   int yPixels = midY + (int)yLen;
   
-  matrix.drawLine(midX, midY, xPixels, yPixels, color); 
+  // Normally the hand is colored on a black background, but if we 
+  // are in party mode, then the background is colored and the 
+  // hand is black. 
+  if (party)( {
+    matrix.drawLine(midX, midY, xPixels, yPixels, matrix.Color333(0,0,0));
+  } else {
+    matrix.drawLine(midX, midY, xPixels, yPixels, color);
+  }
 }
 
