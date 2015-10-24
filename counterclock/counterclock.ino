@@ -59,27 +59,32 @@ void setup() {
 
   //party = true;
   //counter = true;
-  stemsParty = true;
+  //stemsParty = true;
   
-  setTime(1,30,00,24,10,2015); // change this
+  setTime(3,58,30,24,10,2015); // change this
 
 }
 
 void loop() {
+  // Keep track of the current and last times 
+  lastHour = currentHour;
+  lastMin = currentMin;
+  lastSec = currentSec;
+  currentHour = hour();
+  currentMin = minute();
+  currentSec = second();
+  
   if (stemsParty) {
     drawStems();
+    if (currentHour % 12 != 3 && currentMin != 59) {
+        stemsParty = false;
+    }
   } else { // aka when it's actually a clock
-    // Keep track of the current and last times 
-    lastHour = currentHour;
-    lastMin = currentMin;
-    lastSec = currentSec;
-    currentHour = hour();
-    currentMin = minute();
-    currentSec = second();
     
+    Serial.println(currentMin);
     // If the minute has changed, update the clock 
-    if ( (currentMin > lastMin) ||
-       ((currentMin == 0) && (lastMin != 0)) ) {
+    if ( currentMin != lastMin ) {
+        
       if (currentHour % 6 == 0 && currentMin == 0) {
         // might switch to counter at 12 or 6 o'clock
         randomize();
@@ -93,10 +98,8 @@ void loop() {
 
       if (currentHour % 12 == 3 && currentMin == 59) {
         stemsParty = true;
-      } else {
-        stemsParty = false;
       }
-      
+     
       draw();
     }
   }
