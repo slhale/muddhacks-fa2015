@@ -82,6 +82,7 @@ void loop() {
     if ( (currentMin > lastMin) ||
        ((currentMin == 0) && (lastMin != 0)) ) {
         if (currentHour % 6 == 0 && currentMin == 0) {
+          // might switch to counter at 12 or 6 o'clock
           randomize();
         }
         if (currentHour == 0) { // party mode from midnight to 1 am
