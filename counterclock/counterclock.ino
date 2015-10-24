@@ -53,7 +53,9 @@ boolean dinner = false;
 String mode = "rainbow"; // rainbow, slide, flash
 boolean down = true;
 int height = 0;
+int antiHeight = 4;
 int colorStart = 0;
+int antiColor = 5;
 int xStart = -32;
 int stemsCount = 0;
 int stemsIterations = 0;
@@ -171,15 +173,19 @@ void drawStems() {
   if (mode == "rainbow" && stemsIterations % 100 == 0) {
     wipe();
     writeStems(1, height * 6, colorStart, false);
+    writeStems(2, antiHeight * 6 + 1, antiColorStart, false);
 
     colorStart ++;
+    antiColorStart --;
     stemsCount ++;
 
     // Move vertically
     if (down) {
       height ++;
+      antiheight --;
     } else {
       height --;
+      antiheight ++;
     }
 
     // Reverse directions
@@ -190,6 +196,7 @@ void drawStems() {
     // Restart color array
     if (colorStart == 6) {
       colorStart = 0;
+      antiColorStart = 5;
     }
 
 
